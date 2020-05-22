@@ -1,0 +1,14 @@
+[flake8]
+ignore =
+    E203, # Incompatible with black see https://github.com/ambv/black/issues/315
+
+max-line-length=120
+
+exclude =
+    venv/,
+    .git,
+    __pycache__,
+    **/.eggs/,
+    **/.tox/,
+
+max-complexity = 10
