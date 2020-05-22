@@ -1,6 +1,6 @@
 # Centralized `pre-commit` configuration
 
-This repository permit to easily install and update pre-commit hooks and
+Makes it possible to easily install and update pre-commit hooks, and
 to centralize the configuration files of your tools.
 
 To be able to validate and automatically fix commits we're using

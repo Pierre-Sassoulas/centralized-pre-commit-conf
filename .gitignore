@@ -5,3 +5,6 @@ __pycache__/
 .coverage
 htmlcov/
 venv/
+*.egg-info/
+build/
+dist/
