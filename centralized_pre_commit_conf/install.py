@@ -5,27 +5,8 @@ import os
 import subprocess
 import sys
 
-from colorama import Fore, init
-
 from centralized_pre_commit_conf.configuration import CONFIG_FILES
-
-init()
-
-
-def info(message):
-    print(f"{Fore.BLUE}{message}{Fore.RESET}")
-
-
-def warn(message):
-    print(f"{Fore.YELLOW}{message}{Fore.RESET}")
-
-
-def error(message):
-    print(f"{Fore.RED}{message}{Fore.RESET}")
-
-
-def success(message):
-    print(f"{Fore.GREEN}{message}{Fore.RESET}")
+from centralized_pre_commit_conf.prints import error, info, success, warn
 
 
 def main(argv=None):
@@ -57,7 +38,7 @@ def main(argv=None):
     for config_file in CONFIG_FILES:
         if os.path.exists(config_file):
             if not args.replace_existing:
-                print("'{}' already exists (use -f or --replace-existing to replace).".format(config_file))
+                warn(f"'{config_file}' already exists (use -f or --replace-existing to replace).")
                 continue
         if download_configuration_file(args, config_file) != 0:
             download_fail += 1
@@ -79,7 +60,7 @@ def download_configuration_file(args, config_file):
     file_to_download = f"{args.url}/{args.branch}/{args.path}/{config_file}"
     command = ["curl", "-O", file_to_download, "-f"]
     if args.verbose:
-        print(f"{Fore.BLUE}Launching {command} to download {config_file}{Fore.RESET}")
+        info(f"Launching {command} to download {config_file}")
     result = subprocess.run(command, capture_output=True)
     if result.returncode == 22:
         error(f"'{file_to_download}' not found. Are you sure it exists ?")
