@@ -7,6 +7,7 @@ import sys
 
 from centralized_pre_commit_conf.configuration import CONFIG_FILES, DEFAULT_BRANCH, DEFAULT_PATH, DEFAULT_REPOSITORY
 from centralized_pre_commit_conf.prints import error, info, success, warn
+from centralized_pre_commit_conf.update_gitignore import update_gitignore
 
 
 def main(argv=None):
@@ -36,6 +37,7 @@ def main(argv=None):
     if args.verbose:
         info(f"Launching : {init_pre_commit}")
     subprocess.run(init_pre_commit, capture_output=True)
+    update_gitignore(args, CONFIG_FILES)
     if download_fail == 0:
         success(" 🎉 Configuration files recovered and pre-commit installed correctly. 🎉")
     else:

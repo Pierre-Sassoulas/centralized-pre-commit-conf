@@ -8,3 +8,9 @@ venv/
 *.egg-info/
 build/
 dist/
+
+# Configuration file added automatically by 'centralized-pre-commit-conf'
+.isort.cfg
+.pylintrc
+.flake8
+.pre-commit-config.yaml
