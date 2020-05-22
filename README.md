@@ -9,6 +9,10 @@ and [pre-commit](https://pre-commit.com/). `pre-commit` is a framework for manag
 maintaining multi-language pre-commit hooks. The `pre-commit` configuration file
 is `.pre-commit-config.yaml`.
 
+```bash
+curl https://github.com/Pierre-Sassoulas/centralized-pre-commit-conf/blob/master/install.py | python3
+```
+
 ## Philosophy
 
 We don't want tools to be black boxes hidden inside the hooks. So in

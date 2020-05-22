@@ -21,6 +21,7 @@ classifiers = [
 
 [dependencies]
 pre-commit = "^1.0"
+colorama = "*"
 
 [scripts]
 pre-commit-conf = "centralized_pre_commit_conf.main:run"
