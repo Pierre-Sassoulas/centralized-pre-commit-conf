@@ -22,12 +22,12 @@ def main(argv=None):
         info(f"Configuration files to fetch : {CONFIG_FILES}.")
     download_fail = 0
     for config_file in CONFIG_FILES:
-        if os.path.exists(config_file):
-            if not args.replace_existing:
-                warn(f"'{config_file}' already exists (use -f or --replace-existing to replace).")
-                continue
-        if download_configuration_file(args, config_file) != 0:
-            download_fail += 1
+        max_len = max(len(c) for c in CONFIG_FILES)
+        if os.path.exists(config_file) and not args.replace_existing:
+            formatted_config = "{:{align}{width}}".format(config_file, align="<", width=max_len)
+            warn(f"Found existing {formatted_config} ⁉️  Use '-f' or '--replace-existing' to force erase.")
+            continue
+        download_fail += download_configuration_file(args, config_file, max_len)
     install_pre_commit = ["pip3", "install", "pre-commit==1.14.0"]
     if args.verbose:
         info(f"Launching : {install_pre_commit}")
@@ -39,20 +39,27 @@ def main(argv=None):
     if download_fail == 0:
         success(" 🎉 Configuration files recovered and pre-commit installed correctly. 🎉")
     else:
-        warn(f"{download_fail} among {len(CONFIG_FILES)} configuration files were not recovered correctly.")
+        pluralization = "s were" if download_fail != 1 else " was"
+        warn(f" 🎻 {download_fail} configuration file{pluralization} not recovered correctly. 🎻")
 
 
-def download_configuration_file(args, config_file):
+def download_configuration_file(args, config_file, max_len):
     file_to_download = f"{args.url}/{args.branch}/{args.path}/{config_file}"
     command = ["curl", "-O", file_to_download, "-f"]
     if args.verbose:
         info(f"Launching {command} to download {config_file}")
     result = subprocess.run(command, capture_output=True)
-    if result.returncode == 22:
-        error(f"'{file_to_download}' not found. Are you sure it exists ?")
-    elif result.returncode != 0:
-        error(f"'{file_to_download}' download failed:\n{result.stderr.decode('utf8')}")
-    return result.returncode
+    if result.returncode != 0:
+        error_msg = f"download failed 💥 \n{result.stderr.decode('utf8')}"
+        if result.returncode == 22:
+            error_msg = "not found. Are you sure it exists ? 💥"
+        error(f" 💥 '{file_to_download}' {error_msg}")
+    else:
+        formatted_config = "{:{align}{width}}".format(config_file, align="<", width=max_len)
+        success("✨ Successfully retrieved {} ✨".format(formatted_config))
+    if result.returncode == 0:
+        return 0
+    return 1
 
 
 if __name__ == "__main__":
