@@ -29,10 +29,8 @@ def main(argv=None):
     )
     parser.add_argument("-v", "--verbose", action="store_true")
     args = parser.parse_args(argv)
-    message = "Installing with the following options : {}".format(args)
     if args.verbose:
-        info(message)
-    if args.verbose:
+        info(f"Installing with the following options : {args}")
         info(f"Configuration files to fetch : {CONFIG_FILES}.")
     download_fail = 0
     for config_file in CONFIG_FILES:
@@ -51,7 +49,7 @@ def main(argv=None):
         info(f"Launching : {init_pre_commit}")
     subprocess.run(init_pre_commit, capture_output=True)
     if download_fail == 0:
-        success("Configuration files recovered and pre-commit installed correctly.")
+        success(" 🎉 Configuration files recovered and pre-commit installed correctly. 🎉")
     else:
         warn(f"{download_fail} among {len(CONFIG_FILES)} configuration files were not recovered correctly.")
 
