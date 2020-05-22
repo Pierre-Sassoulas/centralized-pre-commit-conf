@@ -21,23 +21,30 @@ def main(argv=None):
     if args.verbose:
         info(f"Installing with the following options : {args}")
         info(f"Configuration files to fetch : {CONFIG_FILES}.")
+    install(
+        url=args.url, branch=args.branch, path=args.path, replace_existing=args.replace_existing, verbose=args.verbose
+    )
+
+
+def install(url, branch, path, replace_existing=False, verbose=False):
     download_fail = 0
     for config_file in CONFIG_FILES:
         max_len = max(len(c) for c in CONFIG_FILES)
-        if os.path.exists(config_file) and not args.replace_existing:
+        if os.path.exists(config_file) and not replace_existing:
             formatted_config = "{:{align}{width}}".format(config_file, align="<", width=max_len)
             warn(f"Found existing {formatted_config} ⁉️  Use '-f' or '--replace-existing' to force erase.")
             continue
-        download_fail += download_configuration_file(args, config_file, max_len)
+        file_to_download = f"{url}/{branch}/{path}/{config_file}"
+        download_fail += download_configuration_file(file_to_download, config_file, max_len, verbose)
     install_pre_commit = ["pip3", "install", "pre-commit==1.14.0"]
-    if args.verbose:
+    if verbose:
         info(f"Launching : {install_pre_commit}")
     subprocess.run(install_pre_commit, capture_output=True)
     init_pre_commit = ["pre-commit", "install"]
-    if args.verbose:
+    if verbose:
         info(f"Launching : {init_pre_commit}")
     subprocess.run(init_pre_commit, capture_output=True)
-    update_gitignore(args, CONFIG_FILES)
+    update_gitignore(CONFIG_FILES, verbose)
     if download_fail == 0:
         success(" 🎉 Configuration files recovered and pre-commit installed correctly. 🎉")
     else:
@@ -45,10 +52,10 @@ def main(argv=None):
         warn(f" 🎻 {download_fail} configuration file{pluralization} not recovered correctly. 🎻")
 
 
-def download_configuration_file(args, config_file, max_len):
-    file_to_download = f"{args.url}/{args.branch}/{args.path}/{config_file}"
+def download_configuration_file(file_to_download, config_file, max_len, verbose):
+
     command = ["curl", "-O", file_to_download, "-f"]
-    if args.verbose:
+    if verbose:
         info(f"Launching {command} to download {config_file}")
     result = subprocess.run(command, capture_output=True)
     if result.returncode != 0:

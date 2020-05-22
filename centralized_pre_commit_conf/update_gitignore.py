@@ -3,7 +3,7 @@ import os
 from centralized_pre_commit_conf.prints import info, success, warn
 
 
-def update_gitignore(args, config_files):
+def update_gitignore(config_files, verbose):
     """Set up the .gitignore for the whole team."""
     if os.path.isfile(".gitignore"):
         config_files_to_add = set()
@@ -11,9 +11,8 @@ def update_gitignore(args, config_files):
             gitignore_content = gitignore.read().split("\n")
             for config_file in config_files:
                 if config_file not in gitignore_content:
-                    message = "{} is not in the .gitignore".format(config_file)
-                    if args.verbose:
-                        info(message)
+                    if verbose:
+                        info("{} is not in the .gitignore".format(config_file))
                     config_files_to_add.add(config_file)
     else:
         warn(" 🔧 We created the '.gitignore' please commit it. 🔧")
