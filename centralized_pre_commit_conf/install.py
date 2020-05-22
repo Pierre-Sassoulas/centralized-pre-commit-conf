@@ -1,32 +1,20 @@
-"""This script permit to install centralized-pre-commit-conf and update your .gitignore."""
+"""Install your centralized pre-commit configuration at the root of your local git workdir."""
 
 import argparse
 import os
 import subprocess
 import sys
 
-from centralized_pre_commit_conf.configuration import CONFIG_FILES
+from centralized_pre_commit_conf.configuration import CONFIG_FILES, DEFAULT_BRANCH, DEFAULT_PATH, DEFAULT_REPOSITORY
 from centralized_pre_commit_conf.prints import error, info, success, warn
 
 
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument(
-        "--url",
-        default="https://raw.githubusercontent.com/Pierre-Sassoulas/centralized-pre-commit-conf",
-        help="Which git repository to use to get the configuration",
-    )
-    parser.add_argument("--branch", default="master", help="Which git branch to use to get the configuration")
-    parser.add_argument(
-        "--path", default="centralized_pre_commit_conf", help="Which git directory to use to get the configuration"
-    )
-    parser.add_argument(
-        "-f",
-        "--replace-existing",
-        default=False,
-        action="store_true",
-        help="Which git branch to use to get the configuration",
-    )
+    parser.add_argument("--url", default=DEFAULT_REPOSITORY, help="Git repository URL")
+    parser.add_argument("--branch", default=DEFAULT_BRANCH, help="Git branch")
+    parser.add_argument("--path", default=DEFAULT_PATH, help="Path inside the git repository")
+    parser.add_argument("-f", "--replace-existing", action="store_true")
     parser.add_argument("-v", "--verbose", action="store_true")
     args = parser.parse_args(argv)
     if args.verbose:
