@@ -24,8 +24,8 @@ def get_updated_gitignore_content(gitignore_content, config_files_to_add):
     text = ""
     mode = "a"
     if GITIGNORE_INFO_TEXT not in gitignore_content:
-        text += f"\n{GITIGNORE_INFO_TEXT}\n"
-    text += "{}\n".format("\n".join(config_files_to_add))
+        text += f"{GITIGNORE_INFO_TEXT}\n"
+    text += "{}\n".format("\n".join(sorted(config_files_to_add)))
     return text, mode
 
 
