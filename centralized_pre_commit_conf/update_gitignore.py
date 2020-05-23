@@ -17,17 +17,21 @@ def update_gitignore(config_files, verbose, path=".gitignore") -> None:
             if verbose:
                 info("{} is not in the .gitignore".format(config_file))
             config_files_to_add.add(config_file)
-    return write_config_file_to_add(config_files_to_add, gitignore_content, path=path)
+    return write_config_file_to_add(config_files_to_add, "\n".join(gitignore_content), path=path)
 
 
 def get_updated_gitignore_content(gitignore_content, config_files_to_add):
     text = ""
-    mode = "a"
-    if GITIGNORE_INFO_TEXT not in gitignore_content:
+    file_to_add = "{}\n".format("\n".join(sorted(config_files_to_add)))
+    if GITIGNORE_INFO_TEXT in gitignore_content:
+        mode = "w"
+        gitignore = gitignore_content.split(f"{GITIGNORE_INFO_TEXT}\n")
+        text = f"{gitignore[0]}\n{GITIGNORE_INFO_TEXT}\n{file_to_add}{''.join(gitignore[1:])}"
+    else:
+        mode = "a"
         if gitignore_content:
             text += "\n"
-        text += f"{GITIGNORE_INFO_TEXT}\n"
-    text += "{}\n".format("\n".join(sorted(config_files_to_add)))
+        text += f"{GITIGNORE_INFO_TEXT}\n{file_to_add}"
     return text, mode
 
 
