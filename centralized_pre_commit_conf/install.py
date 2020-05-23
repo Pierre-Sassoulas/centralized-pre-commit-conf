@@ -53,7 +53,6 @@ def install(url, branch, path, replace_existing=False, verbose=False):
 
 
 def download_configuration_file(file_to_download, config_file, max_len, verbose):
-
     command = ["curl", "-O", file_to_download, "-f"]
     if verbose:
         info(f"Launching {command} to download {config_file}")
