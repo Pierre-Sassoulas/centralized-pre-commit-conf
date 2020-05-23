@@ -1,5 +1,11 @@
 # Centralized `pre-commit` configuration
 
+[![Build Status](https://travis-ci.org/Pierre-Sassoulas/centralized-pre-commit-conf.svg?branch=master)](https://travis-ci.org/Pierre-Sassoulas/centralized-pre-commit-conf)
+[![Coverage Status](https://coveralls.io/repos/github/Pierre-Sassoulas/centralized-pre-commit-conf/badge.svg?branch=master)](https://coveralls.io/github/Pierre-Sassoulas/centralized-pre-commit-conf?branch=master)
+[![PyPI version](https://badge.fury.io/py/centralized-pre-commit-conf.svg)](https://badge.fury.io/py/centralized-pre-commit-conf)
+[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/ambv/black)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
+
 Makes it possible to easily install and update pre-commit hooks, and
 to centralize the configuration files of your tools.
 
