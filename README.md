@@ -16,7 +16,7 @@ order for tools to be used independently, we're copying the configurations
 files (`isort.cfg`, `.flake8`, `.clang-format`, ...) in your git directory.
 
 The idea is to be able to have multiple repository and to be able to
-install all the tools and linters in a single command.
+install all the tools and linters in a single command in each of them.
 
 ## Installation
 

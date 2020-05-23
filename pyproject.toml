@@ -7,7 +7,7 @@ python = "^3.6"
 homepage = "https://github.com/Pierre-Sassoulas/centralized-pre-commit-conf"
 repository = "https://github.com/Pierre-Sassoulas/centralized-pre-commit-conf"
 documentation = "https://github.com/Pierre-Sassoulas/centralized-pre-commit-conf"
-keywords = ["linter", "pre-commit", "statis analysis", "git hook"]
+keywords = ["linter", "pre-commit", "static analysis", "git hook", "centralized", "configuration"]
 classifiers = [
     "Topic :: Software Development",
     "Operating System :: OS Independent",
