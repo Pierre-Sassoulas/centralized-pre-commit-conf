@@ -1,29 +1,38 @@
 import os
 
+from centralized_pre_commit_conf.configuration import GITIGNORE_INFO_TEXT
 from centralized_pre_commit_conf.prints import info, success, warn
 
 
-def update_gitignore(config_files, verbose):
+def update_gitignore(config_files, verbose, path=".gitignore") -> None:
     """Set up the .gitignore for the whole team."""
-    if os.path.isfile(".gitignore"):
-        config_files_to_add = set()
-        with open(".gitignore", encoding="utf8") as gitignore:
-            gitignore_content = gitignore.read().split("\n")
-            for config_file in config_files:
-                if config_file not in gitignore_content:
-                    if verbose:
-                        info("{} is not in the .gitignore".format(config_file))
-                    config_files_to_add.add(config_file)
-    else:
-        warn(" 🔧 We created the '.gitignore' please commit it. 🔧")
-        config_files_to_add = set(config_files)
-    if config_files_to_add:
-        with open(".gitignore", "a", encoding="utf8") as gitignore:
-            info_text = "# Configuration file added automatically by 'centralized-pre-commit-conf'"
-            text = ""
-            if info_text not in gitignore_content:
-                text += f"\n{info_text}\n"
-            text += "{}\n".format("\n".join(config_files_to_add))
-            gitignore.write(text)
-    if config_files_to_add:
-        success(f" ✨ Updated .gitignore successfully with {config_files_to_add}. ✨")
+    if not os.path.isfile(path):
+        warn(f" 🔧 We created '{path}' please commit it. 🔧")
+        return write_config_file_to_add(set(config_files), [""], path=path)
+    config_files_to_add = set()
+    with open(path, encoding="utf8") as git_ignore:
+        gitignore_content = git_ignore.read().split("\n")
+    for config_file in config_files:
+        if config_file not in gitignore_content:
+            if verbose:
+                info("{} is not in the .gitignore".format(config_file))
+            config_files_to_add.add(config_file)
+    return write_config_file_to_add(config_files_to_add, gitignore_content, path=path)
+
+
+def get_updated_gitignore_content(gitignore_content, config_files_to_add):
+    text = ""
+    mode = "a"
+    if GITIGNORE_INFO_TEXT not in gitignore_content:
+        text += f"\n{GITIGNORE_INFO_TEXT}\n"
+    text += "{}\n".format("\n".join(config_files_to_add))
+    return text, mode
+
+
+def write_config_file_to_add(config_files_to_add: list, gitignore_content: list, path: str) -> None:
+    if not config_files_to_add:
+        return
+    text, mode = get_updated_gitignore_content(gitignore_content, config_files_to_add)
+    with open(path, mode, encoding="utf8") as gitignore:
+        gitignore.write(text)
+    success(f" ✨ Updated {path} successfully with {config_files_to_add}. ✨")
