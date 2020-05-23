@@ -19,8 +19,11 @@ def update_gitignore(config_files, verbose):
         config_files_to_add = set(config_files)
     if config_files_to_add:
         with open(".gitignore", "a", encoding="utf8") as gitignore:
-            text = "\n# Configuration file added automatically by 'centralized-pre-commit-conf'"
-            text += "\n{}\n".format("\n".join(config_files_to_add))
+            info_text = "# Configuration file added automatically by 'centralized-pre-commit-conf'"
+            text = ""
+            if info_text not in gitignore_content:
+                text += f"\n{info_text}\n"
+            text += "{}\n".format("\n".join(config_files_to_add))
             gitignore.write(text)
     if config_files_to_add:
         success(f" ✨ Updated .gitignore successfully with {config_files_to_add}. ✨")
