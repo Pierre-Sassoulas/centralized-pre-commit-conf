@@ -11,27 +11,31 @@ from centralized_pre_commit_conf.prints import error, info, success, warn
 from centralized_pre_commit_conf.update_gitignore import update_gitignore
 
 
-def main(argv=None):
-    config = parse_args(argv)
-    url = get_url_from_args(config["repository"].get(), config["branch"].get(), config["path"].get())
-    config_files = config["configuration_files"].get()
-    verbose = config["verbose"].get()
-    replace_existing = config["replace_existing"].get()
+def main():
+    config = confuse.Configuration(APPLICATION_NAME, __name__)
+    try:
+        config = parse_args(config)
+    except confuse.ConfigError as e:
+        error(f"Problem with your configuration file in {[s.filename for s in config.sources]}: {e}")
+        sys.exit(-1)
+    url = get_url_from_args(config["repository"].get(str), config["branch"].get(str), config["path"].get(str))
+    config_files = config["configuration_files"].get(list)
+    verbose = config["verbose"].get(bool)
+    replace_existing = config["replace_existing"].get(bool)
     if verbose:
         info(f"Installing with the following options : {config}")
         info(f"Configuration files to fetch : {config_files}.")
     install(url=url, config_files=config_files, replace_existing=replace_existing, verbose=verbose)
 
 
-def parse_args(argv) -> confuse.Configuration:
-    config = confuse.Configuration(APPLICATION_NAME, __name__)
+def parse_args(config) -> confuse.Configuration:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--url", default=config["repository"].get(), help="Git repository URL")
     parser.add_argument("--branch", default=config["branch"].get("str"), help="Git branch")
     parser.add_argument("--path", default=config["path"].get(), help="Path inside the git repository")
-    parser.add_argument("-f", "--replace-existing", action="store_true")
-    parser.add_argument("-v", "--verbose", action="store_true")
-    args = parser.parse_args(argv)
+    parser.add_argument("-f", "--replace-existing", default=config["replace_existing"].get(bool), action="store_true")
+    parser.add_argument("-v", "--verbose", default=config["verbose"].get(bool), action="store_true")
+    args = parser.parse_args()
     config.set_args(args)
     return config
 
