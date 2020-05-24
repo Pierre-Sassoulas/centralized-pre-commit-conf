@@ -21,9 +21,9 @@ def update_gitignore(config_files, verbose, path=".gitignore") -> None:
     return write_config_file_to_add(config_files_to_add, "\n".join(gitignore_content), path=path)
 
 
-def get_updated_gitignore_content(gitignore_content, config_files_to_add):
-    config = confuse.Configuration(APPLICATION_NAME, __name__)
-    gitignore_info_text = config["gitignore_info_text"].get(str)
+def get_updated_gitignore_content(
+    gitignore_content: str, config_files_to_add: set, gitignore_info_text: str
+) -> [str, str]:
     text = ""
     file_to_add = "{}\n".format("\n".join(sorted(config_files_to_add)))
     if gitignore_info_text in gitignore_content:
@@ -41,7 +41,9 @@ def get_updated_gitignore_content(gitignore_content, config_files_to_add):
 def write_config_file_to_add(config_files_to_add: list, gitignore_content: list, path: str) -> None:
     if not config_files_to_add:
         return
-    text, mode = get_updated_gitignore_content(gitignore_content, config_files_to_add)
+    config = confuse.Configuration(APPLICATION_NAME, __name__)
+    gitignore_info_text = config["gitignore_info_text"].get(str)
+    text, mode = get_updated_gitignore_content(gitignore_content, config_files_to_add, gitignore_info_text)
     with open(path, mode, encoding="utf8") as gitignore:
         gitignore.write(text)
     success(f"✨ Updated {path} successfully with {config_files_to_add}. ✨")
