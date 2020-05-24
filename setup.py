@@ -15,8 +15,8 @@ setup(
     long_description_content_type="text/markdown",
     name="centralized-pre-commit-conf",
     version="0.1.1",
-    description="Makes it possible to easily install and update pre-commit hooks, and to centralize the configuration"
-    " files of your tools.",
+    description="Easily install and update centralized pre-commit hooks and their configuration files in decentralized"
+    " repositories",
     packages=find_namespace_packages(),
     entry_points={"console_scripts": ["pre-commit-conf=centralized_pre_commit_conf.main:run"]},
     package_dir={},
