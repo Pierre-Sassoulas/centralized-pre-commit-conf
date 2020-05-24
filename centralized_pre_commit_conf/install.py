@@ -23,8 +23,11 @@ def main():
     verbose = config["verbose"].get(bool)
     replace_existing = config["replace_existing"].get(bool)
     if verbose:
-        info(f"Installing with the following options : {config}")
-        info(f"Configuration files to fetch : {config_files}.")
+        info(
+            f"Installing with the following options : {config}, "
+            f"you can set the option system wide in {config.config_dir()}."
+            f"Configuration files to fetch : {config_files}."
+        )
     install(url=url, config_files=config_files, replace_existing=replace_existing, verbose=verbose)
 
 
@@ -33,8 +36,22 @@ def parse_args(config) -> confuse.Configuration:
     parser.add_argument("--url", default=config["repository"].get(), help="Git repository URL")
     parser.add_argument("--branch", default=config["branch"].get("str"), help="Git branch")
     parser.add_argument("--path", default=config["path"].get(), help="Path inside the git repository")
-    parser.add_argument("-f", "--replace-existing", default=config["replace_existing"].get(bool), action="store_true")
-    parser.add_argument("-v", "--verbose", default=config["verbose"].get(bool), action="store_true")
+    parser.add_argument(
+        "-f",
+        "--replace-existing",
+        default=config["replace_existing"].get(bool),
+        action="store_true",
+        help="Replace the existing file?",
+    )
+    parser.add_argument("--no-replace-existing", dest="replace_existing", action="store_false")
+    parser.add_argument(
+        "-v",
+        "--verbose",
+        default=config["verbose"].get(bool),
+        action="store_true",
+        help="Display additional information?",
+    )
+    parser.add_argument("--no-verbose", dest="verbose", action="store_false")
     args = parser.parse_args()
     config.set_args(args)
     return config
