@@ -24,6 +24,6 @@ jobs:
 install:
   - pip3 install --editable ".[test]"
 script:
-  - python3 -m pytest . --cov=centralized_pre_commit_conf --cov-report html
+  - coverage run -m pytest . --cov=centralized_pre_commit_conf --cov-report html
 after_success:
   - coveralls
