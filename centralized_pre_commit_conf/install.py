@@ -12,6 +12,18 @@ from centralized_pre_commit_conf.update_gitignore import update_gitignore
 
 
 def main(argv=None):
+    config = parse_args(argv)
+    url = get_url_from_args(config["repository"].get(), config["branch"].get(), config["path"].get())
+    config_files = config["configuration_files"].get()
+    verbose = config["verbose"].get()
+    replace_existing = config["replace_existing"].get()
+    if verbose:
+        info(f"Installing with the following options : {config}")
+        info(f"Configuration files to fetch : {config_files}.")
+    install(url=url, config_files=config_files, replace_existing=replace_existing, verbose=verbose)
+
+
+def parse_args(argv) -> confuse.Configuration:
     config = confuse.Configuration(APPLICATION_NAME, __name__)
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--url", default=config["repository"].get(), help="Git repository URL")
@@ -21,12 +33,7 @@ def main(argv=None):
     parser.add_argument("-v", "--verbose", action="store_true")
     args = parser.parse_args(argv)
     config.set_args(args)
-    url = get_url_from_args(args.url, args.branch, args.path)
-    config_files = config["configuration_files"].get()
-    if args.verbose:
-        info(f"Installing with the following options : {config}")
-        info(f"Configuration files to fetch : {config_files}.")
-    install(url=url, config_files=config_files, replace_existing=args.replace_existing, verbose=args.verbose)
+    return config
 
 
 def get_url_from_args(url: str, branch: str, path: str) -> str:
