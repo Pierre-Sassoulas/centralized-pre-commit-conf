@@ -10,7 +10,7 @@ build/
 dist/
 
 # Configuration file added automatically by 'centralized-pre-commit-conf'
-.isort.cfg
-.pylintrc
 .flake8
+.isort.cfg
 .pre-commit-config.yaml
+.pylintrc

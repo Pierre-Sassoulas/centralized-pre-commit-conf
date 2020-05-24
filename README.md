@@ -31,23 +31,47 @@ pip3 install centralized-pre-commit-conf
 pre-commit-conf --help
 ```
 
-##  Result
+##  Usage
 
-For example with this configuration:
+### Installing hooks
+
+For example with this `config.yaml` in [one of the appropriate
+search paths](https://confuse.readthedocs.io/en/latest/#search-paths):
 
 ```
-CONFIG_FILES = [".flake8", ".isort.cfg", ".pre-commit-config.yaml", ".pylintrc"]
+CONFIG_FILES :
+    - ".pylintrc"
+    - ".pre-commit-config.yaml"
+DEFAULT_REPOSITORY: https://mycompany.net/lint-conf/
+DEFAULT_BRANCH: master
+DEFAULT_PATH: "pre-commit/static/"
+GITIGNORE_INFO_TEXT: "# Configuration file added automatically by 'centralized-pre-commit-conf'"
 ```
 
-`pre-commit-conf` will recover the defined configuration files and
-update the `.gitignore`:
+`pre-commit-conf` would recover the defined configuration files from
+`https://mycompany.net/lint-conf/master/pre-commit/static/` and update the `.gitignore`:
 
+```
+✨ Successfully retrieved .pre-commit-config.yaml ✨
+✨ Successfully retrieved .pylintrc               ✨
+✨ Updated .gitignore successfully with {'.pre-commit-config.yaml', '.pylintrc'}. ✨
+ 🎉 2 configuration files recovered and pre-commit installed correctly. 🎉
+```
+
+Here would the content of the `.gitignore`:
 ```
 # Configuration file added automatically by 'centralized-pre-commit-conf'
-.isort.cfg
-.pylintrc
-.flake8
 .pre-commit-config.yaml
+.pylintrc
+```
+
+Then with the same configuration, using `pre-commit-conf --branch hardcore-pylint-conf` would try to recover
+the configuration files from `https://mycompany.net/lint-conf/hardcore-pylint-conf/pre-commit/static/` instead.
+
+```
+Found existing .pre-commit-config.yaml ⁉️  Use '-f' or '--replace-existing' to force erase.
+Found existing .pylintrc               ⁉️  Use '-f' or '--replace-existing' to force erase.
+All configuration files already existed.
 ```
 
 Next commit supposing the `.pre-commit-config.yaml` is done correctly
