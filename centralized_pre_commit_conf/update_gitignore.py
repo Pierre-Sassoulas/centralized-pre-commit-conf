@@ -23,7 +23,7 @@ def update_gitignore(config_files, verbose, path=".gitignore") -> None:
 
 def get_updated_gitignore_content(gitignore_content, config_files_to_add):
     config = confuse.Configuration(APPLICATION_NAME, __name__)
-    gitignore_info_text = config["GITIGNORE_INFO_TEXT"].get(str)
+    gitignore_info_text = config["gitignore_info_text"].get(str)
     text = ""
     file_to_add = "{}\n".format("\n".join(sorted(config_files_to_add)))
     if gitignore_info_text in gitignore_content:

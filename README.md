@@ -39,13 +39,13 @@ For example with this `config.yaml` in [one of the appropriate
 search paths](https://confuse.readthedocs.io/en/latest/#search-paths):
 
 ```
-CONFIG_FILES :
+configuration_files :
     - ".pylintrc"
     - ".pre-commit-config.yaml"
-DEFAULT_REPOSITORY: https://mycompany.net/lint-conf/
-DEFAULT_BRANCH: master
-DEFAULT_PATH: "pre-commit/static/"
-GITIGNORE_INFO_TEXT: "# Configuration file added automatically by 'centralized-pre-commit-conf'"
+repository: https://mycompany.net/lint-conf/
+branch: master
+path: "pre-commit/static/"
+gitignore_info_text: "# Configuration file added automatically by 'centralized-pre-commit-conf'"
 ```
 
 `pre-commit-conf` would recover the defined configuration files from
