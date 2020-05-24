@@ -1,12 +1,13 @@
 import unittest
 
-from centralized_pre_commit_conf.configuration import GITIGNORE_INFO_TEXT
 from centralized_pre_commit_conf.update_gitignore import get_updated_gitignore_content
+
+GITIGNORE_INFO_TEXT = "# fervpierpvjepvjpvjepvjperjverpovpeorvpor"
 
 
 class TestUpdateGitignore(unittest.TestCase):
     def test_nothing(self):
-        text, mode = get_updated_gitignore_content("", set(["a", "b", "c"]))
+        text, mode = get_updated_gitignore_content("", set(["a", "b", "c"]), GITIGNORE_INFO_TEXT)
         self.assertEqual(mode, "a")
         self.assertEqual(
             text,
@@ -18,7 +19,7 @@ c
         )
 
     def test_something(self):
-        text, mode = get_updated_gitignore_content("d\ne\n", set(["a", "b", "c"]))
+        text, mode = get_updated_gitignore_content("d\ne\n", set(["a", "b", "c"]), GITIGNORE_INFO_TEXT)
         self.assertEqual(mode, "a")
         self.assertEqual(
             text,
@@ -31,7 +32,9 @@ c
         )
 
     def test_old_cppc_data(self):
-        text, mode = get_updated_gitignore_content(f"d\ne\n{GITIGNORE_INFO_TEXT}\nf\ng\n", set(["a", "b", "c"]))
+        text, mode = get_updated_gitignore_content(
+            f"d\ne\n{GITIGNORE_INFO_TEXT}\nf\ng\n", set(["a", "b", "c"]), GITIGNORE_INFO_TEXT
+        )
         self.assertEqual(mode, "w")
         self.assertEqual(
             text,
@@ -60,6 +63,7 @@ h
 i
 """,
             set(["a", "b", "c"]),
+            GITIGNORE_INFO_TEXT,
         )
         self.assertEqual(mode, "w")
         self.assertEqual(
@@ -94,6 +98,7 @@ build/
 dist/
 """,
             set([".clang-format", ".clang-tidy", ".csslintrc"]),
+            GITIGNORE_INFO_TEXT,
         )
         self.assertEqual(mode, "w")
         self.assertEqual(
