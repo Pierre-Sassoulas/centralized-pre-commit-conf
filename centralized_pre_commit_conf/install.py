@@ -63,9 +63,13 @@ def get_url_from_args(url: str, branch: str, path: str) -> str:
         url = url[:-1]
     if path.endswith("/"):
         path = path[:-1]
-    if path:
+    if path and branch:
         return f"{url}/{branch}/{path}"
-    return f"{url}/{branch}"
+    if branch:
+        return f"{url}/{branch}"
+    if path:
+        return f"{url}/{path}"
+    return f"{url}"
 
 
 def install(url, config_files, replace_existing=False, verbose=False):
