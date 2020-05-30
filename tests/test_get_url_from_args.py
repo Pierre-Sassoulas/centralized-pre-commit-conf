@@ -1,6 +1,6 @@
 import unittest
 
-from centralized_pre_commit_conf.install import get_url_from_args
+from centralized_pre_commit_conf.parse_args import get_url_from_args
 
 
 class TestGetUrlFromArgs(unittest.TestCase):
