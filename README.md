@@ -28,10 +28,11 @@ files of your tools (`.pre-commit-config.yaml`, `isort.cfg`, `.flake8`,
 
 ```bash
 pip3 install centralized-pre-commit-conf
-pre-commit-conf --help
 ```
 
 ##  Usage
+
+See `pre-commit-conf --help` for options.
 
 ### Installing hooks
 
