@@ -4,6 +4,7 @@ import argparse
 import os
 import subprocess
 import sys
+from pathlib import Path
 
 import confuse
 from centralized_pre_commit_conf.constants import APPLICATION_NAME, ExitCode
@@ -73,6 +74,27 @@ def get_url_from_args(url: str, branch: str, path: str) -> str:
 
 
 def install(url, config_files, replace_existing=False, verbose=False):
+    download_configuration(config_files, replace_existing, url, verbose)
+    install_pre_commit(verbose)
+    update_gitignore(config_files, verbose)
+
+
+def install_pre_commit(verbose):
+    if not Path(".pre-commit-config.yaml").exists():
+        warn("No '.pre-commit-config.yaml' found, we can't install pre-commit.")
+        sys.exit(ExitCode.PRE_COMMIT_CONF_NOT_FOUND)
+    install_pre_commit_command = ["pip3", "install", "pre-commit==1.14.0"]
+    if verbose:
+        info(f"Launching : {install_pre_commit_command}")
+    subprocess.run(install_pre_commit_command, capture_output=True)
+    init_pre_commit = ["pre-commit", "install"]
+    if verbose:
+        info(f"Launching : {init_pre_commit}")
+    subprocess.run(init_pre_commit, capture_output=True)
+    success(f"🎉 pre-commit installed locally with the current configuration. 🎉")
+
+
+def download_configuration(config_files, replace_existing, url, verbose):
     download_fail = 0
     download_success = 0
     for config_file in config_files:
@@ -85,19 +107,10 @@ def install(url, config_files, replace_existing=False, verbose=False):
             download_success += 1
         else:
             download_fail += 1
-    install_pre_commit = ["pip3", "install", "pre-commit==1.14.0"]
-    if verbose:
-        info(f"Launching : {install_pre_commit}")
-    subprocess.run(install_pre_commit, capture_output=True)
-    init_pre_commit = ["pre-commit", "install"]
-    if verbose:
-        info(f"Launching : {init_pre_commit}")
-    subprocess.run(init_pre_commit, capture_output=True)
-    update_gitignore(config_files, verbose)
     if download_fail == 0:
         if download_success > 0:
             plural = "s" if download_success > 1 else ""
-            success(f"🎉 {download_success} configuration file{plural} recovered and pre-commit installed correctly. 🎉")
+            success(f"🎉 {download_success} configuration file{plural} recovered. 🎉")
         else:
             warn(f"All configuration files already existed.")
     else:
