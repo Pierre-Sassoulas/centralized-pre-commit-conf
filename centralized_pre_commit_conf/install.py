@@ -6,7 +6,7 @@ import subprocess
 import sys
 
 import confuse
-from centralized_pre_commit_conf.constants import APPLICATION_NAME
+from centralized_pre_commit_conf.constants import APPLICATION_NAME, ExitCode
 from centralized_pre_commit_conf.prints import error, info, success, warn
 from centralized_pre_commit_conf.update_gitignore import update_gitignore
 
@@ -17,7 +17,7 @@ def main():
         config = parse_args(config)
     except confuse.ConfigError as e:
         error(f"Problem with your configuration file in {[s.filename for s in config.sources]}: {e}")
-        sys.exit(-1)
+        sys.exit(ExitCode.PRE_COMMIT_CONF_NOT_FOUND)
     url = get_url_from_args(config["repository"].get(str), config["branch"].get(str), config["path"].get(str))
     config_files = config["configuration_files"].get(list)
     verbose = config["verbose"].get(bool)
@@ -122,4 +122,5 @@ def download_configuration_file(file_to_download, config_file, max_len, verbose)
 
 
 if __name__ == "__main__":
-    sys.exit(main())
+    main()
+    sys.exit(ExitCode.OK)
