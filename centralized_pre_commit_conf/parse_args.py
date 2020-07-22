@@ -20,7 +20,7 @@ def get_url_from_args(url: str, branch: str, path: str) -> str:
 
 def parse_args(config) -> confuse.Configuration:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("-u", "--url", default=config["repository"].get(), help="Git repository URL")
+    parser.add_argument("-r", "--repository", default=config["repository"].get(), help="Git repository URL")
     parser.add_argument("-b", "--branch", default=config["branch"].get("str"), help="Git branch")
     parser.add_argument("-p", "--path", default=config["path"].get(), help="Path inside the git repository")
     default_replace = config["replace_existing"].get(bool)
