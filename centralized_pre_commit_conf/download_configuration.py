@@ -4,7 +4,7 @@ import subprocess
 from centralized_pre_commit_conf.prints import error, info, success, warn
 
 
-def download_configuration(config_files, replace_existing, url, verbose):
+def download_configuration(config_files, replace_existing, url, verbose, insecure):
     download_fail = 0
     download_success = 0
     for config_file in config_files:
@@ -13,7 +13,7 @@ def download_configuration(config_files, replace_existing, url, verbose):
             formatted_config = "{:{align}{width}}".format(config_file, align="<", width=max_len)
             warn(f"Found existing {formatted_config} ⁉️  Use '-f' or '--replace-existing' to force erase.")
             continue
-        if download_configuration_file(f"{url}/{config_file}", config_file, max_len, verbose):
+        if download_configuration_file(f"{url}/{config_file}", config_file, max_len, verbose, insecure):
             download_success += 1
         else:
             download_fail += 1
@@ -28,8 +28,10 @@ def download_configuration(config_files, replace_existing, url, verbose):
         warn(f"🎻 {download_fail} configuration file{pluralization} not recovered correctly. 🎻")
 
 
-def download_configuration_file(file_to_download, config_file, max_len, verbose):
+def download_configuration_file(file_to_download, config_file, max_len, verbose, insecure):
     command = ["curl", "-O", file_to_download, "-f"]
+    if insecure:
+        command.insert(1, "--insecure")
     if verbose:
         info(f"Launching {command} to download {config_file}")
     result = subprocess.run(command, capture_output=True)
