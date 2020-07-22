@@ -10,8 +10,8 @@ from centralized_pre_commit_conf.prints import info, success, warn
 from centralized_pre_commit_conf.update_gitignore import update_gitignore
 
 
-def install(url, config_files, replace_existing=False, verbose=False):
-    download_configuration(config_files, replace_existing, url, verbose)
+def install(url, config_files, replace_existing=False, verbose=False, insecure=False):
+    download_configuration(config_files, replace_existing, url, verbose, insecure)
     install_pre_commit(verbose)
     update_gitignore(config_files, verbose)
 

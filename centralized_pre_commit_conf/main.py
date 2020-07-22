@@ -18,13 +18,14 @@ def run():
     config_files = config["configuration_files"].get(list)
     verbose = config["verbose"].get(bool)
     replace_existing = config["replace_existing"].get(bool)
+    insecure = config["insecure"].get(bool)
     if verbose:
         info(
             f"Installing with the following options : {config}, "
             f"you can set the option system wide in {config.config_dir()}."
             f"Configuration files to fetch : {config_files}."
         )
-    install(url=url, config_files=config_files, replace_existing=replace_existing, verbose=verbose)
+    install(url=url, config_files=config_files, replace_existing=replace_existing, verbose=verbose, insecure=insecure)
     sys.exit(ExitCode.OK)
 
 

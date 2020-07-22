@@ -27,6 +27,11 @@ def parse_args(config) -> confuse.Configuration:
     parser.add_argument(
         "-f", "--replace-existing", default=default_replace, action="store_true", help="Replace the existing file?"
     )
+    default_insecure = config["insecure"].get(bool)
+
+    parser.add_argument(
+        "-k", "--insecure", default=default_insecure, action="store_true", help="Accept self signed certificate?"
+    )
     parser.add_argument("--no-replace-existing", dest="replace_existing", action="store_false")
     default_verbose = config["verbose"].get(bool)
     parser.add_argument(
