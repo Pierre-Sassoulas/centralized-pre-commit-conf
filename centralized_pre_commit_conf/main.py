@@ -13,7 +13,7 @@ def run():
         config = parse_args(config)
     except confuse.ConfigError as e:
         error(f"Problem with your configuration file in {[s.filename for s in config.sources]}: {e}")
-        sys.exit(ExitCode.PRE_COMMIT_CONF_NOT_FOUND)
+        sys.exit(ExitCode.PRE_COMMIT_CONF_NOT_FOUND.value)
     url = get_url_from_args(config["repository"].get(str), config["branch"].get(str), config["path"].get(str))
     config_files = config["configuration_files"].get(list)
     verbose = config["verbose"].get(bool)
@@ -26,7 +26,7 @@ def run():
             f"Configuration files to fetch : {config_files}."
         )
     install(url=url, config_files=config_files, replace_existing=replace_existing, verbose=verbose, insecure=insecure)
-    sys.exit(ExitCode.OK)
+    sys.exit(ExitCode.OK.value)
 
 
 if __name__ == "__main__":
