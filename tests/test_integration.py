@@ -2,11 +2,14 @@ import sys
 import unittest
 from typing import List
 
+import pytest
+
 from centralized_pre_commit_conf.main import run
 
 URL = "https://raw.githubusercontent.com/Pierre-Sassoulas/centralized-pre-commit-conf"
 
 
+@pytest.mark.vcr()
 class TestIntegration(unittest.TestCase):
     def test_help(self):
         self.assert_exit_with_code(["pre-commit-conf", "-h"], 0)
