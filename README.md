@@ -19,10 +19,25 @@ and maintaining multi-language pre-commit hooks. Please refer to the
 ## Philosophy
 
 In order to be able to install all the tools and linters in a single
-command with up to date configuration, we're copying the configurations
-files of your tools (`.pre-commit-config.yaml`, `isort.cfg`, `.flake8`,
+command with up to date centralized configurations, we're copying the
+configurations files of your tools (`.pre-commit-config.yaml`, `isort.cfg`, `.flake8`,
  `.clang-format`, ...) from an URL to your local git directory and we
  then install `pre-commit`.
+
+Why not use only `pre-commit` by @asotile? Well, [in his words](https://github.com/pre-commit/pre-commit/issues/450#issuecomment-405616722):
+
+    pre-commit will not directly support mutability in configuration
+    (this includes referencing a centralized repository). This causes
+    lots of issues with repeatability and maintenance in general. This
+    was an early design decision after seeing the pain caused at scale
+    when a linter changes behaviour and suddenly every repository's
+    master branch is broken.
+
+So if you disagree and want decentralized repository with centralized lint configuration,
+you need a tool on top of pre-commit to shoot yourself in the foot anyway.
+
+More seriously, the alternative is to use [all-repos](https://github.com/asottile/all-repos) to mass update a
+bunch of decentralized repositories with a decentralized configuration.
 
 ## Installation
 
@@ -30,7 +45,7 @@ files of your tools (`.pre-commit-config.yaml`, `isort.cfg`, `.flake8`,
 pip3 install centralized-pre-commit-conf
 ```
 
-##  Usage
+## Usage
 
 See `pre-commit-conf --help` for options.
 
@@ -77,3 +92,13 @@ All configuration files already existed.
 
 Next commit supposing the `.pre-commit-config.yaml` is done correctly
 your modified files we be linted with the centralized configuration.
+
+# Development / contribution
+
+```
+pip3 install -e ".[test]"
+pre-commit-conf
+python3 -m pytest --cov centralized_pre_commit_conf
+```
+
+Pull requests are welcome :)
