@@ -22,7 +22,7 @@ def download_configuration(config_files, replace_existing, url, verbose, insecur
             plural = "s" if download_success > 1 else ""
             success(f"🎉 {download_success} configuration file{plural} recovered. 🎉")
         else:
-            warn(f"All configuration files already existed.")
+            warn("All configuration files already existed.")
     else:
         pluralization = "s were" if download_fail != 1 else " was"
         warn(f"🎻 {download_fail} configuration file{pluralization} not recovered correctly. 🎻")
