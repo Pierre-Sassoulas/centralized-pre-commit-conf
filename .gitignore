@@ -14,3 +14,4 @@ dist/
 .isort.cfg
 .pre-commit-config.yaml
 .pylintrc
+.mypy_cache
