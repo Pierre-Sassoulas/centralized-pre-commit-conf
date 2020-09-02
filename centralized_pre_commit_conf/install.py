@@ -28,4 +28,4 @@ def install_pre_commit(verbose):
     if verbose:
         info(f"Launching : {init_pre_commit}")
     subprocess.run(init_pre_commit, capture_output=True)
-    success(f"🎉 pre-commit installed locally with the current configuration. 🎉")
+    success("🎉 pre-commit installed locally with the current configuration. 🎉")
