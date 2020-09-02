@@ -29,6 +29,10 @@ def download_configuration(config_files, replace_existing, url, verbose, insecur
 
 
 def download_configuration_file(file_to_download, config_file, max_len, verbose, insecure):
+    import requests
+
+    res = requests.get(file_to_download)
+    print(res)
     command = ["curl", "-O", file_to_download, "-f"]
     if insecure:
         command.insert(1, "--insecure")
