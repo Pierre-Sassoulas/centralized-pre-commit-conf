@@ -1,0 +1,303 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      User-Agent:
+      - python-requests/2.22.0
+    method: GET
+    uri: https://raw.githubusercontent.com/Pierre-Sassoulas/centralized-pre-commit-conf/master/centralized_pre_commit_conf/static/.flake8
+  response:
+    body:
+      string: !!binary |
+        H4sIAAAAAAAAA0VOzQqDMBi79yk+2E3Uzx8GY+Bxhz3DGNJ232qxVlmrq2+/ThnLKQkhye1peE+n
+        O9PKji+ChkHEpSrqFA5wtXIcJu61MARv7TsQhsseHBF03k/ujKiiPYs8BpEPYsEtgdq5mRzW5ZGx
+        gYfMaEuZIat815RVwRgFaebHb3Ahu2C60TwW7qxtp1Vy2VHb7kaSYE5KOfxLP4aotonvVUNB+xUa
+        KAv2ATzxSKDbAAAA
+    headers:
+      Accept-Ranges:
+      - bytes
+      Access-Control-Allow-Origin:
+      - '*'
+      Cache-Control:
+      - max-age=300
+      Connection:
+      - keep-alive
+      Content-Encoding:
+      - gzip
+      Content-Length:
+      - '183'
+      Content-Security-Policy:
+      - default-src 'none'; style-src 'unsafe-inline'; sandbox
+      Content-Type:
+      - text/plain; charset=utf-8
+      Date:
+      - Wed, 02 Sep 2020 14:12:17 GMT
+      ETag:
+      - W/"abebfe29d2570bbaeb01620b6af4144cd86da16e5d9caa3ea09246361b266e8b"
+      Expires:
+      - Wed, 02 Sep 2020 14:17:17 GMT
+      Source-Age:
+      - '0'
+      Strict-Transport-Security:
+      - max-age=31536000
+      Vary:
+      - Authorization,Accept-Encoding
+      Via:
+      - 1.1 varnish (Varnish/6.0)
+      - 1.1 varnish
+      X-Cache:
+      - MISS, MISS
+      X-Cache-Hits:
+      - 0, 0
+      X-Content-Type-Options:
+      - nosniff
+      X-Fastly-Request-ID:
+      - a0914a3960858684ded89eab6f3da5ba15f5bfca
+      X-Frame-Options:
+      - deny
+      X-GitHub-Request-Id:
+      - F0A6:6900:9B0518:B43A29:5F4FA83F
+      X-Served-By:
+      - cache-cdg20738-CDG
+      X-Timer:
+      - S1599055937.890430,VS0,VE324
+      X-XSS-Protection:
+      - 1; mode=block
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      User-Agent:
+      - python-requests/2.22.0
+    method: GET
+    uri: https://raw.githubusercontent.com/Pierre-Sassoulas/centralized-pre-commit-conf/master/centralized_pre_commit_conf/static/.isort.cfg
+  response:
+    body:
+      string: !!binary |
+        H4sIAAAAAAAAAz2RwVLEIAyG730KH0FXD176AM548ODNcTopTdtsgSCEXevTyxK6XPh+EsL/D18J
+        Rcgv6btz2QoNljwOnCVk6Z+7qiz6Rdb+6fTYkTc2TzhIBCq1ZTDsHPSfMWO3eb76QVaK0xAgyt53
+        D2WN6aXuhi1HcNAEb4Qmi2CsBxMIZiGrAk1pFW4lShJZkQ0HqTiTPe7OFjZ8PTBtlRaSY7cwViQH
+        wVhCL3eZMF7alDP5M5wqOjY6xNI4Kfw6teZK7pvP1JRzLGtlzwkrBPDFp/rTto+3d62ke8SwO/YL
+        N9YrTQgmafh3e65ynOZiRhF/cmnR0TGDQ20pP5mDMDdvF6O5rmV2hR1KhhD5jEb0a1Iu6XfFFSbe
+        un9xaDgADwIAAA==
+    headers:
+      Accept-Ranges:
+      - bytes
+      Access-Control-Allow-Origin:
+      - '*'
+      Cache-Control:
+      - max-age=300
+      Connection:
+      - keep-alive
+      Content-Encoding:
+      - gzip
+      Content-Length:
+      - '295'
+      Content-Security-Policy:
+      - default-src 'none'; style-src 'unsafe-inline'; sandbox
+      Content-Type:
+      - text/plain; charset=utf-8
+      Date:
+      - Wed, 02 Sep 2020 14:12:18 GMT
+      ETag:
+      - W/"5731076f67ffa9501b42743a61f0c790b08fb250edba313a2f177dd3a56ac632"
+      Expires:
+      - Wed, 02 Sep 2020 14:17:18 GMT
+      Source-Age:
+      - '0'
+      Strict-Transport-Security:
+      - max-age=31536000
+      Vary:
+      - Authorization,Accept-Encoding
+      Via:
+      - 1.1 varnish (Varnish/6.0)
+      - 1.1 varnish
+      X-Cache:
+      - MISS, MISS
+      X-Cache-Hits:
+      - 0, 0
+      X-Content-Type-Options:
+      - nosniff
+      X-Fastly-Request-ID:
+      - 7ca39bd6b306564d3a7f15597ee1df557d0692b4
+      X-Frame-Options:
+      - deny
+      X-GitHub-Request-Id:
+      - C064:0D0B:50CC99:5F1BC1:5F4FA840
+      X-Served-By:
+      - cache-cdg20766-CDG
+      X-Timer:
+      - S1599055938.032791,VS0,VE176
+      X-XSS-Protection:
+      - 1; mode=block
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      User-Agent:
+      - python-requests/2.22.0
+    method: GET
+    uri: https://raw.githubusercontent.com/Pierre-Sassoulas/centralized-pre-commit-conf/master/centralized_pre_commit_conf/static/.pre-commit-config.yaml
+  response:
+    body:
+      string: !!binary |
+        H4sIAAAAAAAAA5VRQW7DIBC8+xV8AJzYPbRIeUmVAyZr2BqMtVA3+X1tXCl241YtB1hmZ2fQQDCE
+        KAvOGKOplMymNERZlgaTfW+EDr4cCPh0ekyrktsQuliwPDhKNlaiEnW+547M5ayLF8m0Bd1xD2Tm
+        +b51qNOGkEihw97wD4sJ4qA0bPrQX3hoeYsOpu0KtCP/FkO/A9+Udzvw9RvaOtXBc4bmpchEyV55
+        fi6ak1j65z9H5ZEoUOQYA6VVTk+iFtXxp6AW9n89htuUXdp8Ri0ePBaf2eWL/6uN8s1YNk7p7q57
+        fBF1c3h8+6x5p67Cm2yAO+hNsqdjdTgXn4wloNxwAgAA
+    headers:
+      Accept-Ranges:
+      - bytes
+      Access-Control-Allow-Origin:
+      - '*'
+      Cache-Control:
+      - max-age=300
+      Connection:
+      - keep-alive
+      Content-Encoding:
+      - gzip
+      Content-Length:
+      - '261'
+      Content-Security-Policy:
+      - default-src 'none'; style-src 'unsafe-inline'; sandbox
+      Content-Type:
+      - text/plain; charset=utf-8
+      Date:
+      - Wed, 02 Sep 2020 14:12:19 GMT
+      ETag:
+      - W/"380c94c440170d371cf0f32b3801c960a6fe8531fe85ab34b5f5e827d17c1d91"
+      Expires:
+      - Wed, 02 Sep 2020 14:17:19 GMT
+      Source-Age:
+      - '0'
+      Strict-Transport-Security:
+      - max-age=31536000
+      Vary:
+      - Authorization,Accept-Encoding
+      Via:
+      - 1.1 varnish (Varnish/6.0)
+      - 1.1 varnish
+      X-Cache:
+      - MISS, MISS
+      X-Cache-Hits:
+      - 0, 0
+      X-Content-Type-Options:
+      - nosniff
+      X-Fastly-Request-ID:
+      - 75e690619ec22355e24635b66ed7070b8d32271d
+      X-Frame-Options:
+      - deny
+      X-GitHub-Request-Id:
+      - 2ECC:4715:53F780:6272A6:5F4FA842
+      X-Served-By:
+      - cache-cdg20745-CDG
+      X-Timer:
+      - S1599055939.916427,VS0,VE163
+      X-XSS-Protection:
+      - 1; mode=block
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      User-Agent:
+      - python-requests/2.22.0
+    method: GET
+    uri: https://raw.githubusercontent.com/Pierre-Sassoulas/centralized-pre-commit-conf/master/centralized_pre_commit_conf/static/.pylintrc
+  response:
+    body:
+      string: !!binary |
+        H4sIAAAAAAAAA4VS22obMRB9368YcKEJaL3rC6UNmOK4oS00kMYJfQjGaFfjXTVaaZFm43Wa/ku/
+        pV/W0drta/UgxFzOnHNGI1gjQk3UhossqzTVXTEuXZPdHFZfl1l7MNpSVhhXZI0MhP4U8iXsnIfW
+        haALg+Ba0s6GJHm4Xq7vrm43CfaENnAwbR+rdF9rQqMDLUzfGLGXViWN7FPGwtSgraheTKZ5onSQ
+        jLdIgM8qn0wmAkbQaB5jq1S5MpDn1yk9m+Ux/c07W0EtbcUp0FahJRn5DGVX+TyPKL9/3duIDeRA
+        N63zdEKZT6YR5RNzMqigOIAOnIUzDjAau9EyWuwskEUjTMdzCGzbxX+NY94dhmz6Nn9zPkwj59Id
+        7tO2K4wu0wapdioM7L44AreD0sgQMEApLTxJo5U5sLQnttjyy1mEYxNbfblcf15tkmQEH51TXO31
+        INDKhgHY8rKGULvOKJBmLw+BBYAsS2wJlWAJrfSSjpIlMPlGJhUjpQPAQovv4lGg2AmtxFb04iCe
+        47BbrDojPWDfegxxxdBIKutofum8x5JOHI9MEhZ3M/gByoFlmdFSI7Ud/lBAum8heu2oRg96B5p4
+        jEJipABUS4I98iY4qwl23jXQWU2EgcZ3fK1kQG647Ggofh2GISfJ/74or/0IOU6O7FJf9YsHmT5v
+        N/HO03fbzY+pmOU/X70MpM5WcRfn718Ipf/g9vZvIPkDdTPU0zcDAAA=
+    headers:
+      Accept-Ranges:
+      - bytes
+      Access-Control-Allow-Origin:
+      - '*'
+      Cache-Control:
+      - max-age=300
+      Connection:
+      - keep-alive
+      Content-Encoding:
+      - gzip
+      Content-Length:
+      - '554'
+      Content-Security-Policy:
+      - default-src 'none'; style-src 'unsafe-inline'; sandbox
+      Content-Type:
+      - text/plain; charset=utf-8
+      Date:
+      - Wed, 02 Sep 2020 14:12:20 GMT
+      ETag:
+      - W/"849cafe4171e399732ce0cb889b9d9c6311e29f96e01600e50c92bfbd67037f0"
+      Expires:
+      - Wed, 02 Sep 2020 14:17:20 GMT
+      Source-Age:
+      - '0'
+      Strict-Transport-Security:
+      - max-age=31536000
+      Vary:
+      - Authorization,Accept-Encoding
+      Via:
+      - 1.1 varnish (Varnish/6.0)
+      - 1.1 varnish
+      X-Cache:
+      - MISS, MISS
+      X-Cache-Hits:
+      - 0, 0
+      X-Content-Type-Options:
+      - nosniff
+      X-Fastly-Request-ID:
+      - 158800436d37588c9a4f58ee32c7fe06ab588d3b
+      X-Frame-Options:
+      - deny
+      X-GitHub-Request-Id:
+      - AABC:0E9B:4DCE3C:5BD740:5F4FA844
+      X-Served-By:
+      - cache-cdg20752-CDG
+      X-Timer:
+      - S1599055940.433734,VS0,VE157
+      X-XSS-Protection:
+      - 1; mode=block
+    status:
+      code: 200
+      message: OK
+version: 1
