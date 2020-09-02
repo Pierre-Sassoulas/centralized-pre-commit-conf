@@ -1,7 +1,11 @@
 import os
-import subprocess
+import warnings
+from pathlib import Path
+
+import requests
 
 from centralized_pre_commit_conf.prints import error, info, success, warn
+from urllib3.exceptions import InsecureRequestWarning
 
 
 def download_configuration(config_files, replace_existing, url, verbose, insecure):
@@ -29,22 +33,25 @@ def download_configuration(config_files, replace_existing, url, verbose, insecur
 
 
 def download_configuration_file(file_to_download, config_file, max_len, verbose, insecure):
-    import requests
-
-    res = requests.get(file_to_download)
-    print(res)
-    command = ["curl", "-O", file_to_download, "-f"]
+    kwargs = {}
     if insecure:
-        command.insert(1, "--insecure")
+        kwargs = {"verify": False}
     if verbose:
-        info(f"Launching {command} to download {config_file}")
-    result = subprocess.run(command, capture_output=True)
-    if result.returncode != 0:
-        error_msg = f"download failed 💥\n{result.stderr.decode('utf8')}"
-        if result.returncode == 22:
+        info(f"Downloading {config_file} from {file_to_download} with option {kwargs}")
+    with warnings.catch_warnings(record=True) as messages:
+        result = requests.get(file_to_download, **kwargs)
+        for msg in messages:
+            if not insecure or msg.category is not InsecureRequestWarning:
+                warn(msg.message)
+    path = Path(file_to_download)
+    with open(path.name, "wb") as f:
+        f.write(result.content)
+    if result.status_code != 200:
+        error_msg = f"download failed 💥\nHTTP status {result.status_code} !"
+        if result.status_code == 404:
             error_msg = "not found. Are you sure it exists ? 💥"
         error(f"💥 '{file_to_download}' {error_msg}")
     else:
         formatted_config = "{:{align}{width}}".format(config_file, align="<", width=max_len)
         success("✨ Successfully retrieved {} ✨".format(formatted_config))
-    return result.returncode == 0
+    return result.status_code == 200
