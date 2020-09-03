@@ -27,10 +27,6 @@ def install_pre_commit(verbose):
     if not Path(".pre-commit-config.yaml").exists():
         warn("No '.pre-commit-config.yaml' found, we can't install pre-commit.")
         sys.exit(ExitCode.PRE_COMMIT_CONF_NOT_FOUND)
-    install_pre_commit_command = ["pip3", "install", "pre-commit==1.14.0"]
-    if verbose:
-        info(f"Launching : {install_pre_commit_command}")
-    subprocess_compat_mode(install_pre_commit_command)
     init_pre_commit = ["pre-commit", "install"]
     if verbose:
         info(f"Launching : {init_pre_commit}")
