@@ -40,7 +40,9 @@ def get_updated_gitignore_content(
     return text, mode
 
 
-def write_config_file_to_add(config_files_to_add: Iterable[str], gitignore_content: str, path: str) -> None:
+def write_config_file_to_add(
+    config_files_to_add: Iterable[str], gitignore_content: str, path: Union[Path, str]
+) -> None:
     if not config_files_to_add:
         return
     config = confuse.Configuration(APPLICATION_NAME, __name__)
