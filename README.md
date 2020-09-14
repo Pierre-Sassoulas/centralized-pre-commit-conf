@@ -26,17 +26,18 @@ configurations files of your tools (`.pre-commit-config.yaml`, `isort.cfg`, `.fl
 
 Why not use only `pre-commit` by @asotile? Well, [in his words](https://github.com/pre-commit/pre-commit/issues/450#issuecomment-405616722):
 
-    pre-commit will not directly support mutability in configuration
-    (this includes referencing a centralized repository). This causes
-    lots of issues with repeatability and maintenance in general. This
-    was an early design decision after seeing the pain caused at scale
-    when a linter changes behaviour and suddenly every repository's
-    master branch is broken.
+> pre-commit will not directly support mutability in configuration
+(this includes referencing a centralized repository). This causes
+lots of issues with repeatability and maintenance in general. This
+was an early design decision after seeing the pain caused at scale
+when a linter changes behaviour and suddenly every repository's
+master branch is broken.
 
 So if you disagree and want decentralized repository with centralized lint configuration,
 you need a tool on top of pre-commit to shoot yourself in the foot anyway.
 
-More seriously, the alternative is to use [all-repos](https://github.com/asottile/all-repos) to mass update a
+More seriously, the alternative is to use
+[all-repos](https://github.com/asottile/all-repos) to mass update a
 bunch of decentralized repositories with a decentralized configuration.
 
 ## Installation
@@ -54,7 +55,7 @@ See `pre-commit-conf --help` for options.
 For example with this `config.yaml` in [one of the appropriate
 search paths](https://confuse.readthedocs.io/en/latest/#search-paths):
 
-```
+```yaml
 configuration_files :
     - ".pylintrc"
     - ".pre-commit-config.yaml"
@@ -67,7 +68,7 @@ gitignore_info_text: "# Configuration file added automatically by 'centralized-p
 `pre-commit-conf` would recover the defined configuration files from
 `https://mycompany.net/lint-conf/master/pre-commit/static/` and update the `.gitignore`:
 
-```
+```bash
 ✨ Successfully retrieved .pre-commit-config.yaml ✨
 ✨ Successfully retrieved .pylintrc               ✨
 ✨ Updated .gitignore successfully with {'.pre-commit-config.yaml', '.pylintrc'}. ✨
@@ -75,16 +76,19 @@ gitignore_info_text: "# Configuration file added automatically by 'centralized-p
 ```
 
 Here would the content of the `.gitignore`:
-```
+
+```ini
 # Configuration file added automatically by 'centralized-pre-commit-conf'
 .pre-commit-config.yaml
 .pylintrc
 ```
 
-Then with the same configuration, using `pre-commit-conf --branch hardcore-pylint-conf` would try to recover
-the configuration files from `https://mycompany.net/lint-conf/hardcore-pylint-conf/pre-commit/static/` instead.
+Then with the same configuration, using `pre-commit-conf --branch
+hardcore-pylint-conf` would try to recover the configuration files
+from `https://mycompany.net/lint-conf/hardcore-pylint-conf/pre-commit/static/`
+instead.
 
-```
+```bash
 Found existing .pre-commit-config.yaml ⁉️  Use '-f' or '--replace-existing' to force erase.
 Found existing .pylintrc               ⁉️  Use '-f' or '--replace-existing' to force erase.
 All configuration files already existed.
@@ -93,9 +97,9 @@ All configuration files already existed.
 Next commit supposing the `.pre-commit-config.yaml` is done correctly
 your modified files we be linted with the centralized configuration.
 
-# Development / contribution
+## Development / contribution
 
-```
+```bash
 pip3 install -e ".[test]"
 pre-commit-conf
 python3 -m pytest --cov centralized_pre_commit_conf
