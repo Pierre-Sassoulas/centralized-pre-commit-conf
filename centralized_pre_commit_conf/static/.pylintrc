@@ -6,9 +6,9 @@ max-line-length=120
 disable=
     C0111, # missing-docstring
     C0330, # Wrong hanging indentation
-    E0401, # Unable to import
-    C0412, # Handled by isort (and incompatible before 2.4 see : https://github.com/PyCQA/pylint/issues/2806)
-    too-few-public-methods, # Lot of classes can validly have only one method
+    E0401, # Unable to import
+    C0412, wrong-import-order # Handled by isort (and incompatible before 2.4 see : https://github.com/PyCQA/pylint/issues/2806)
+    too-few-public-methods, # Lot of classes can validly have only one method
 
 [BASIC]
 
@@ -16,7 +16,7 @@ disable=
 good-names=i,j,k,e,f,id,_,x,y,z
 
 # Regular expression matching correct method names
-# Pylint do not complain for setUp and other if it
+# Pylint do not complain for setUp and other if it
 # detects that we inherit from unittest.TestCase
 # But that's not always possible to detect.
 method-rgx=[a-z_][a-z0-9_]{2,30}$|setUp(Class)?|tearDown(Class)?
