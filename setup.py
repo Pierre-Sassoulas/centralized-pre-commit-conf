@@ -2,7 +2,7 @@
 
 from setuptools import find_namespace_packages, setup
 
-with open("README.md", "r") as r:
+with open("README.md", "r", encoding="utf-8") as r:
     README = r.read()
 
 TEST_REQUIRES = ["pytest-cov", "pytest-vcr", "python-coveralls"]
@@ -14,7 +14,7 @@ setup(
     long_description=README,
     long_description_content_type="text/markdown",
     name="centralized-pre-commit-conf",
-    version="0.3.3",
+    version="0.3.4",
     description="Easily install and update centralized pre-commit hooks and their configuration files in decentralized"
     " repositories",
     packages=find_namespace_packages(),
