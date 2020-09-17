@@ -14,7 +14,7 @@ setup(
     long_description=README,
     long_description_content_type="text/markdown",
     name="centralized-pre-commit-conf",
-    version="0.3.4",
+    version="0.3.5",
     description="Easily install and update centralized pre-commit hooks and their configuration files in decentralized"
     " repositories",
     packages=find_namespace_packages(),
@@ -30,7 +30,7 @@ setup(
         "Development Status :: 4 - Beta",
     ],
     package_data={"centralized_pre_commit_conf": ["*.cfg", "*.yaml", "*.pylintrc", "*.flake8"]},
-    install_requires=["setuptools>=45.1", "wheel>=0.34", "colorama", "confuse", "pre-commit>=1.16"],
+    install_requires=["setuptools>=45.1", "wheel>=0.34", "colorama", "confuse", "pre-commit>=1.16", "requests"],
     tests_require=TEST_REQUIRES,
     extras_require={"test": TEST_REQUIRES},
     url="https://github.com/Pierre-Sassoulas/centralized-pre-commit-conf",
