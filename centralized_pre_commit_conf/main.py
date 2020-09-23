@@ -2,6 +2,7 @@ import sys
 from pathlib import Path
 
 import confuse
+
 from centralized_pre_commit_conf.constants import APPLICATION_NAME, ExitCode
 from centralized_pre_commit_conf.install import install
 from centralized_pre_commit_conf.parse_args import get_url_from_args, parse_args

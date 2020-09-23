@@ -3,6 +3,7 @@ from pathlib import Path
 from typing import Iterable, Set, Tuple, Union
 
 import confuse
+
 from centralized_pre_commit_conf.constants import APPLICATION_NAME
 from centralized_pre_commit_conf.prints import info, success, warn
 

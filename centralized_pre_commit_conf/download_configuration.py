@@ -3,9 +3,9 @@ import warnings
 from pathlib import Path
 
 import requests
+from urllib3.exceptions import InsecureRequestWarning
 
 from centralized_pre_commit_conf.prints import error, info, success, warn
-from urllib3.exceptions import InsecureRequestWarning
 
 
 def download_configuration(config_files, replace_existing, url, verbose, insecure):
