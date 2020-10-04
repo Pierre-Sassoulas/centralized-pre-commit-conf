@@ -1,21 +1,21 @@
 import os
 import warnings
 from pathlib import Path
-from typing import List
 
+import confuse
 import requests
 from urllib3.exceptions import InsecureRequestWarning
 
+from centralized_pre_commit_conf.parse_args import get_url_from_args
 from centralized_pre_commit_conf.prints import error, info, success, warn
 
 
-def download_configuration(
-    config_files: List[str],
-    replace_existing: bool,
-    url: str,
-    verbose: bool,
-    insecure: bool,
-) -> None:
+def download_configuration(config: confuse.Configuration) -> None:
+    config_files = config["configuration_files"].get(list)
+    url = get_url_from_args(config["repository"].get(str), config["branch"].get(str), config["path"].get(str))
+    verbose = config["verbose"].get(bool)
+    replace_existing = config["replace_existing"].get(bool)
+    insecure = config["insecure"].get(bool)
     download_fail = 0
     download_success = 0
     for config_file in config_files:

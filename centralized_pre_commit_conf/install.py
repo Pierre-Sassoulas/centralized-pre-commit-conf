@@ -9,23 +9,16 @@ import confuse
 
 from centralized_pre_commit_conf.constants import ExitCode
 from centralized_pre_commit_conf.download_configuration import download_configuration
-from centralized_pre_commit_conf.parse_args import get_url_from_args
 from centralized_pre_commit_conf.prints import info, success, warn
 from centralized_pre_commit_conf.update_gitignore import update_gitignore
 
 
 def install(config: confuse.Configuration) -> None:
-    url = get_url_from_args(config["repository"].get(str), config["branch"].get(str), config["path"].get(str))
     config_files = config["configuration_files"].get(list)
     verbose = config["verbose"].get(bool)
-    replace_existing = config["replace_existing"].get(bool)
-    insecure = config["insecure"].get(bool)
-    update_gitignore_on_install = config["update_gitignore"].get(bool)
-    if config_files is None:
-        config_files = []
-    download_configuration(config_files, replace_existing, url, verbose, insecure)
+    download_configuration(config)
     install_pre_commit(verbose)
-    if update_gitignore_on_install:
+    if config["update_gitignore"].get(bool):
         update_gitignore(config_files, verbose)
 
 
