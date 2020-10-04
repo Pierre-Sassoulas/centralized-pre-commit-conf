@@ -18,8 +18,8 @@ def download_configuration(config: confuse.Configuration) -> None:
     insecure = config["insecure"].get(bool)
     download_fail = 0
     download_success = 0
+    max_len = max(len(c) for c in config_files)
     for config_file in config_files:
-        max_len = max(len(c) for c in config_files)
         if os.path.exists(config_file) and not replace_existing:
             formatted_config = "{:{align}{width}}".format(config_file, align="<", width=max_len)
             warn(f"Found existing {formatted_config} ⁉️  Use '-f' or '--replace-existing' to force erase.")
@@ -28,6 +28,10 @@ def download_configuration(config: confuse.Configuration) -> None:
             download_success += 1
         else:
             download_fail += 1
+    display_results(download_fail, download_success)
+
+
+def display_results(download_fail, download_success):
     if download_fail == 0:
         if download_success > 0:
             plural = "s" if download_success > 1 else ""
