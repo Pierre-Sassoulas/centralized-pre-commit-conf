@@ -8,6 +8,7 @@ branch: master
 path: "centralized_pre_commit_conf/static"
 dependencies: ["black==19.3b0", "isort==4.3.15", "pylint", "flake8"]
 gitignore_info_text: "# Configuration file added automatically by 'centralized-pre-commit-conf'"
+update_gitignore: False
 replace_existing: False
 verbose: False
 insecure: False

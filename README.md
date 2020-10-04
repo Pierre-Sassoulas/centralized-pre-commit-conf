@@ -34,7 +34,9 @@ when a linter changes behaviour and suddenly every repository's
 master branch is broken.
 
 So if you disagree and want decentralized repository with centralized lint configuration,
-you need a tool on top of pre-commit to shoot yourself in the foot anyway.
+you need a tool on top of pre-commit to shoot yourself in the foot anyway. Or more
+realistically to update your configuration files from a central repository from time
+to time.
 
 More seriously, the alternative is to use
 [all-repos](https://github.com/asottile/all-repos) to mass update a
@@ -61,6 +63,7 @@ configuration_files :
     - ".pre-commit-config.yaml"
 repository: https://mycompany.net/lint-conf/
 branch: master
+update_gitignore: True
 path: "pre-commit/static/"
 gitignore_info_text: "# Configuration file added automatically by 'centralized-pre-commit-conf'"
 ```

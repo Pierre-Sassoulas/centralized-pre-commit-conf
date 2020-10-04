@@ -27,8 +27,15 @@ def parse_args(config) -> confuse.Configuration:
     parser.add_argument(
         "-f", "--replace-existing", default=default_replace, action="store_true", help="Replace the existing file?"
     )
+    update_gitignore = config["update_gitignore"].get(bool)
+    parser.add_argument(
+        "-u",
+        "--update-gitignore",
+        default=update_gitignore,
+        action="store_true",
+        help="Add configuration file to the .gitignore.",
+    )
     default_insecure = config["insecure"].get(bool)
-
     parser.add_argument(
         "-k", "--insecure", default=default_insecure, action="store_true", help="Accept self signed certificate?"
     )
