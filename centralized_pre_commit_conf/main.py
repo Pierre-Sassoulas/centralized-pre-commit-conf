@@ -21,12 +21,20 @@ def run():
     verbose = config["verbose"].get(bool)
     replace_existing = config["replace_existing"].get(bool)
     insecure = config["insecure"].get(bool)
+    update_gitignore_on_install = config["update_gitignore"].get(bool)
     if verbose:
         info(f"Installing with the following options : {config}.")
         config_path = Path(config.config_dir()).resolve() / "config.yaml"
         info(f"You can set the option system wide in {config_path}.")
         info(f"Configuration files to fetch : {config_files}.")
-    install(url=url, config_files=config_files, replace_existing=replace_existing, verbose=verbose, insecure=insecure)
+    install(
+        url=url,
+        config_files=config_files,
+        replace_existing=replace_existing,
+        verbose=verbose,
+        insecure=insecure,
+        update_gitignore_on_install=update_gitignore_on_install,
+    )
     sys.exit(ExitCode.OK.value)
 
 
