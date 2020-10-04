@@ -23,7 +23,8 @@ def run():
     insecure = config["insecure"].get(bool)
     update_gitignore_on_install = config["update_gitignore"].get(bool)
     config_path = Path(config.config_dir()).resolve() / "config.yaml"
-    info(f"You can set the option system wide in {config_path}.")
+    if not config_path.exists():
+        info(f"You can set the option system wide in {config_path}.")
     if verbose:
         info(f"Installing with the following options : {config}.")
         info(f"Configuration files to fetch : {config_files}.")
