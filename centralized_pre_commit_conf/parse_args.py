@@ -27,6 +27,13 @@ def parse_args(config) -> confuse.Configuration:
     parser.add_argument(
         "-f", "--replace-existing", default=default_replace, action="store_true", help="Replace the existing file?"
     )
+    parser.add_argument(
+        "-c",
+        "--configuration-files",
+        nargs="+",
+        help="Configuration files to fetch",
+        default=config["configuration_files"].get(list),
+    )
     update_gitignore = config["update_gitignore"].get(bool)
     parser.add_argument(
         "-u",
