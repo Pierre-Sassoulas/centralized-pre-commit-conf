@@ -14,7 +14,7 @@ setup(
     long_description=README,
     long_description_content_type="text/markdown",
     name="centralized-pre-commit-conf",
-    version="0.3.6",
+    version="0.4.0",
     description="Easily install and update centralized pre-commit hooks and their configuration files in decentralized"
     " repositories",
     packages=find_namespace_packages(),
