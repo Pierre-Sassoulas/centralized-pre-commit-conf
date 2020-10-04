@@ -3,6 +3,7 @@
 import subprocess
 import sys
 from pathlib import Path
+from typing import List
 
 from centralized_pre_commit_conf.constants import ExitCode
 from centralized_pre_commit_conf.download_configuration import download_configuration
@@ -11,13 +12,15 @@ from centralized_pre_commit_conf.update_gitignore import update_gitignore
 
 
 def install(
-    url,
-    config_files,
+    url: str,
+    config_files: List[str] = None,
     replace_existing: bool = False,
     verbose: bool = False,
     insecure: bool = False,
     update_gitignore_on_install: bool = False,
 ):
+    if config_files is None:
+        config_files = []
     download_configuration(config_files, replace_existing, url, verbose, insecure)
     install_pre_commit(verbose)
     if update_gitignore_on_install:
