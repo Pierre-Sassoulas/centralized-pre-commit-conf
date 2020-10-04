@@ -72,6 +72,7 @@ gitignore_info_text: "# Configuration file added automatically by 'centralized-p
 `https://mycompany.net/lint-conf/master/pre-commit/static/` and update the `.gitignore`:
 
 ```bash
+You can set the option system wide in /home/pierre/.config/pre-commit-conf/config.yaml.
 ✨ Successfully retrieved .pre-commit-config.yaml ✨
 ✨ Successfully retrieved .pylintrc               ✨
 ✨ Updated .gitignore successfully with {'.pre-commit-config.yaml', '.pylintrc'}. ✨
@@ -92,6 +93,7 @@ from `https://mycompany.net/lint-conf/hardcore-pylint-conf/pre-commit/static/`
 instead.
 
 ```bash
+You can set the option system wide in /home/pierre/.config/pre-commit-conf/config.yaml.
 Found existing .pre-commit-config.yaml ⁉️  Use '-f' or '--replace-existing' to force erase.
 Found existing .pylintrc               ⁉️  Use '-f' or '--replace-existing' to force erase.
 All configuration files already existed.
