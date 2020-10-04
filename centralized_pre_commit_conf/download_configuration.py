@@ -26,7 +26,10 @@ def download_configuration(config: confuse.Configuration) -> None:
         config_file_url = f"{url}/{config_file}"
         if verbose:
             info(f"Downloading '{config_file}' from '{config_file_url}'")
-        if download_configuration_file(config_file_url, config_file, max_len, insecure):
+        result = recover_new_content(config_file_url, insecure)
+        path = Path(config_file_url)
+        write_new_content(path, result)
+        if check_download(config_file, config_file_url, max_len, result):
             download_success += 1
         else:
             download_fail += 1
@@ -45,7 +48,7 @@ def display_results(download_fail, download_success):
         warn(f"🎻 {download_fail} configuration file{pluralization} not recovered correctly. 🎻")
 
 
-def download_configuration_file(config_file_url: str, config_file: str, max_len: int, insecure: bool) -> bool:
+def recover_new_content(config_file_url, insecure):
     with warnings.catch_warnings(record=True) as messages:
         if insecure:
             result = requests.get(config_file_url, verify=False)
@@ -54,9 +57,15 @@ def download_configuration_file(config_file_url: str, config_file: str, max_len:
         for msg in messages:
             if not insecure or msg.category is not InsecureRequestWarning:
                 warn(msg.message)
-    path = Path(config_file_url)
+    return result
+
+
+def write_new_content(path: Path, result):
     with open(path.name, "wb") as f:
         f.write(result.content)
+
+
+def check_download(config_file, config_file_url, max_len, result):
     if result.status_code != 200:
         error_msg = f"download failed 💥\nHTTP status {result.status_code} !"
         if result.status_code == 404:
@@ -66,3 +75,9 @@ def download_configuration_file(config_file_url: str, config_file: str, max_len:
     formatted_config = "{:{align}{width}}".format(config_file, align="<", width=max_len)
     success("✨ Successfully retrieved {} ✨".format(formatted_config))
     return True
+
+
+def read_current_file(path: Path) -> bytes:
+    with open(path.name, "wb") as f:
+        old_content = f.read()
+    return old_content
