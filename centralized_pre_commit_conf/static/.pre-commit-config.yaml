@@ -3,7 +3,6 @@ repos:
     rev: v1.4
     hooks:
     -   id: autoflake
-        exclude: &fixtures tests/functional/|tests/input|tests/extensions/data|tests/regrtest_data/|tests/data/
         args:
             - --in-place
             - --remove-all-unused-imports
@@ -30,7 +29,6 @@ repos:
     hooks:
     - id: black
       args: [--safe, --quiet, --line-length=120]
-      exclude: *fixtures
 -   repo: local
     hooks:
     -   id: pylint
