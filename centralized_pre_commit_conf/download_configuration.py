@@ -1,6 +1,7 @@
 import os
 import warnings
 from pathlib import Path
+from typing import Dict
 
 import confuse
 import requests
@@ -10,53 +11,93 @@ from centralized_pre_commit_conf.parse_args import get_url_from_args
 from centralized_pre_commit_conf.prints import error, info, success, warn
 
 
+class Result:
+    # pylint: disable=too-few-public-methods
+
+    downloaded: bool
+    new_content: bool
+    replaced: bool
+    failed_download: requests.Response
+
+    def __init__(self):
+        self.downloaded = False
+        self.new_content = False
+        self.replaced = False
+        self.failed_download = None
+
+    def __repr__(self):
+        return f"{self.downloaded} {self.replaced} {self.new_content}"
+
+
 def download_configuration(config: confuse.Configuration) -> None:
-    download_fail = 0
-    download_success = 0
+    results = {}
     config_files = config["configuration_files"].get(list)
-    max_len = max(len(c) for c in config_files)
     url = get_url_from_args(config["repository"].get(str), config["branch"].get(str), config["path"].get(str))
     insecure = config["insecure"].get(bool)
     verbose = config["verbose"].get(bool)
     for config_file in config_files:
+        result = Result()
         config_file_url = f"{url}/{config_file}"
         if verbose:
             info(f"Downloading '{config_file}' from '{config_file_url}'")
-        result = recover_new_content(config_file_url, insecure)
-        if check_download(config_file, config_file_url, max_len, result):
-            download_success += 1
-        else:
-            download_fail += 1
+        request_result = recover_new_content(config_file_url, insecure)
+        result.downloaded = request_result.status_code == 200
+        if not result.downloaded:
+            result.failed_download = request_result
+            results[config_file] = result
+            continue
         path = Path(config_file_url)
         old_content = None
         file_already_exists = os.path.exists(config_file)
         if file_already_exists:
             old_content = read_current_file(path)
-        if old_content == result.content:
-            info(f"{config_file} was already up to date.")
+        result.new_content = old_content != request_result.content
+        if not file_already_exists or (result.new_content and config["replace_existing"].get(bool)):
+            result.replaced = True
+            write_new_content(path, request_result)
+        results[config_file] = result
+    display_results(results)
+
+
+def display_results(results: Dict[str, Result]) -> None:
+    max_len: int = max(len(c) for c in results)
+    failed: int = 0
+    no_new_content: int = 0
+    not_replaced: int = 0
+    replaced: int = 0
+    for file, result in results.items():
+        formatted_config: str = "{:{align}{width}}".format(file, align="<", width=max_len)
+        if not result.downloaded:
+            failed += 1
+            details = f"{result.failed_download.url} HTTP{result.failed_download.status_code}"
+            error(f"{formatted_config} : 🎻 Download failed 🎻 : {details}")
+        elif not result.new_content:
+            no_new_content += 1
+            success(f"{formatted_config} : ✨ Already up to date ✨")
+        elif result.replaced:
+            replaced += 1
+            success(f"{formatted_config} : 🎉✨ Updated with new content ✨🎉")
         else:
-            formatted_config = "{:{align}{width}}".format(config_file, align="<", width=max_len)
-            if not config["replace_existing"].get(bool):
-                warn(f"Found existing {formatted_config} ⁉️  Use '-f' or '--replace-existing' to force erase.")
-                continue
-            success("✨ Updated content of {} ✨".format(formatted_config))
-            write_new_content(path, result)
-    display_results(download_fail, download_success)
+            not_replaced += 1
+            warn(f"{formatted_config} : 🔔 already exists 🔔")
+    if not results:
+        warn("Nothing to recover ❓")
+        return
+    if failed != 0:
+        plural = "s were" if failed != 1 else " was"
+        error(f"🎻 {failed} configuration file{plural} not recovered correctly. 🎻")
+    if no_new_content != 0:
+        plural = "s" if no_new_content > 1 else ""
+        success(f"✨ {no_new_content} configuration file{plural} already up to date ✨")
+    if not_replaced != 0:
+        plural = "s" if not_replaced > 1 else ""
+        warn(f"🔔 {not_replaced} file{plural} not replaced. Use '-f' or '--replace-existing' to force erase. 🔔")
+    if replaced != 0:
+        plural = "s" if replaced > 1 else ""
+        success(f"🎉✨ {replaced} configuration file{plural} updated. ✨🎉")
 
 
-def display_results(download_fail, download_success):
-    if download_fail == 0:
-        if download_success > 0:
-            plural = "s" if download_success > 1 else ""
-            success(f"🎉 {download_success} configuration file{plural} recovered. 🎉")
-        else:
-            warn("All configuration files already existed.")
-    else:
-        pluralization = "s were" if download_fail != 1 else " was"
-        warn(f"🎻 {download_fail} configuration file{pluralization} not recovered correctly. 🎻")
-
-
-def recover_new_content(config_file_url, insecure):
+def recover_new_content(config_file_url: str, insecure: bool) -> requests.Response:
     with warnings.catch_warnings(record=True) as messages:
         if insecure:
             result = requests.get(config_file_url, verify=False)
@@ -68,20 +109,16 @@ def recover_new_content(config_file_url, insecure):
     return result
 
 
-def write_new_content(path: Path, result):
+def write_new_content(path: Path, request_result: requests.Response) -> None:
     with open(path.name, "wb") as f:
-        f.write(result.content)
+        f.write(request_result.content)
 
 
-def check_download(config_file, config_file_url, max_len, result):
-    if result.status_code != 200:
-        error_msg = f"download failed 💥\nHTTP status {result.status_code} !"
-        if result.status_code == 404:
-            error_msg = "not found. Are you sure it exists ? 💥"
+def check_download(config_file_url: str, request_result: requests.Response) -> bool:
+    if request_result.status_code != 200:
+        error_msg = f"download failed 💥\nHTTP status {request_result.status_code} !"
         error(f"💥 '{config_file_url}' {error_msg}")
         return False
-    formatted_config = "{:{align}{width}}".format(config_file, align="<", width=max_len)
-    info("✨ Successfully retrieved {} ✨".format(formatted_config))
     return True
 
 
