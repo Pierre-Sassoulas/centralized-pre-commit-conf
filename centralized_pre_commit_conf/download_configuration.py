@@ -1,6 +1,7 @@
 import os
 import warnings
 from pathlib import Path
+from typing import List
 
 import requests
 from urllib3.exceptions import InsecureRequestWarning
@@ -8,7 +9,13 @@ from urllib3.exceptions import InsecureRequestWarning
 from centralized_pre_commit_conf.prints import error, info, success, warn
 
 
-def download_configuration(config_files, replace_existing, url, verbose, insecure):
+def download_configuration(
+    config_files: List[str],
+    replace_existing: bool,
+    url: str,
+    verbose: bool,
+    insecure: bool,
+) -> None:
     download_fail = 0
     download_success = 0
     for config_file in config_files:

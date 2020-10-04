@@ -18,7 +18,7 @@ def install(
     verbose: bool = False,
     insecure: bool = False,
     update_gitignore_on_install: bool = False,
-):
+) -> None:
     if config_files is None:
         config_files = []
     download_configuration(config_files, replace_existing, url, verbose, insecure)
@@ -27,7 +27,7 @@ def install(
         update_gitignore(config_files, verbose)
 
 
-def subprocess_compat_mode(commands):
+def subprocess_compat_mode(commands: List[str]) -> subprocess.CompletedProcess:
     should_raise = False
     if sys.version_info.minor >= 7:
         return subprocess.run(commands, capture_output=True, check=should_raise)
@@ -35,7 +35,7 @@ def subprocess_compat_mode(commands):
     return subprocess.run(commands, stdout=subprocess.PIPE, stderr=subprocess.PIPE, check=should_raise)
 
 
-def install_pre_commit(verbose):
+def install_pre_commit(verbose: bool) -> None:
     if not Path(".pre-commit-config.yaml").exists():
         warn("No '.pre-commit-config.yaml' found, we can't install pre-commit.")
         sys.exit(ExitCode.PRE_COMMIT_CONF_NOT_FOUND)
