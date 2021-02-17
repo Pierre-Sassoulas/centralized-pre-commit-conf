@@ -1,8 +1,9 @@
 [flake8]
 ignore =
     E203, # Incompatible with black see https://github.com/ambv/black/issues/315
+    W503, E231 # Incompatible with black
 
-max-line-length=120
+max-line-length=92
 
 exclude =
     venv/,
