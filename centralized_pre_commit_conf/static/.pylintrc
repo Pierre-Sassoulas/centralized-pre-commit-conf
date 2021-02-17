@@ -1,14 +1,37 @@
 # See https://github.com/PyCQA/pylint/blob/master/pylintrc for possible options
 
 [MASTER]
-extension-pkg-whitelist=lxml,wand
-max-line-length=120
+extension-pkg-allow-list=lxml,wand,pygrib,netCDF4,numpy,pandas
+max-line-length=88
 disable=
-    C0111, # missing-docstring
-    C0330, # Wrong hanging indentation
-    E0401, # Unable to import
-    C0412, wrong-import-order # Handled by isort (and incompatible before 2.4 see : https://github.com/PyCQA/pylint/issues/2806)
+    missing-docstring, # Sometime it is self explanatory
+    wrong-import-order, # Handled by isort
+    ungrouped-imports, # Handled by isort
+    no-self-use, # literally a convention that do not change anything
     too-few-public-methods, # Lot of classes can validly have only one method
+    too-many-instance-attributes, # Too much work
+    too-many-locals, # Too much work
+    too-many-return-statements, # Too much work
+    too-many-arguments, # Too much work
+    too-many-branches, # We have flake8 C901 that is better
+    redefined-outer-name, # Heavily used by pytest fixtures
+    fixme, # This is legit
+
+enable=
+    useless-suppression,
+    use-symbolic-message-instead,
+load-plugins=
+    # pylint.extensions.mccabe,
+    pylint.extensions.confusing_elif,
+    # pylint.extensions.broad_try_clause,
+    # pylint.extensions.emptystring,
+    pylint.extensions.bad_builtin,
+    pylint.extensions.check_elif,
+    pylint.extensions.redefined_variable_type,
+    pylint.extensions.overlapping_exceptions,
+    pylint.extensions.empty_comment,
+    # pylint.extensions.typing,
+    # pylint.extensions.docparams,
 
 [BASIC]
 
@@ -20,3 +43,20 @@ good-names=i,j,k,e,f,id,_,x,y,z
 # detects that we inherit from unittest.TestCase
 # But that's not always possible to detect.
 method-rgx=[a-z_][a-z0-9_]{2,30}$|setUp(Class)?|tearDown(Class)?
+
+[LOGGING]
+logging-format-style=old
+
+[SIMILARITIES]
+# Minimum lines number of a similarity.
+min-similarity-lines=4
+
+# Ignore imports when computing similarities.
+ignore-imports=yes
+
+# Ignore docstrings when computing similarities
+ignore-docstrings=yes
+
+# Ignore signatures when computing similarities
+# You'll need pylint > 2.10 for that
+ignore-signatures=yes

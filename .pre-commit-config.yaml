@@ -12,45 +12,91 @@ repos:
           - --expand-star-imports
           - --remove-duplicate-keys
           - --remove-unused-variables
+  - repo: https://github.com/Pierre-Sassoulas/remove-empty-comment
+    rev: 1.1.0
+    hooks:
+      - id: remove-empty-comment
+        args: [--meaningless-characters, "-= "]
+  - repo: https://github.com/PyCQA/isort
+    rev: 5.10.1
+    hooks:
+      - id: isort
+  - repo: https://github.com/asottile/pyupgrade
+    rev: v2.31.0
+    hooks:
+      - id: pyupgrade
+        args: [--py38-plus]
+  - repo: https://github.com/guilatrova/tryceratops
+    rev: v1.0.1
+    hooks:
+      - id: tryceratops
+  - repo: https://github.com/asottile/blacken-docs
+    rev: v1.12.1
+    hooks:
+      - id: blacken-docs
+        additional_dependencies: [black==21.9b0]
+  - repo: https://github.com/ambv/black
+    rev: 22.1.0
+    hooks:
+      - id: black
+        args: [--safe, --quiet]
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v2.2.3
+    rev: v4.1.0
     hooks:
       - id: check-merge-conflict
       - id: trailing-whitespace
+        args: [--markdown-linebreak-ext=md]
       - id: end-of-file-fixer
       - id: check-json
-      - id: check-yaml
+      - id: check-ast
+  - repo: https://github.com/PyCQA/flake8
+    rev: 4.0.1
+    hooks:
       - id: flake8
-        args: [--config=.flake8]
-  - repo: https://github.com/PyCQA/isort
-    rev: 5.5.2
-    hooks:
-      - id: isort
-  - repo: https://github.com/ambv/black
-    rev: 20.8b1
-    hooks:
-      - id: black
-        args: [--safe, --quiet, --line-length=120]
+        additional_dependencies: [flake8-bugbear==21.4.3]
   - repo: local
     hooks:
       - id: pylint
         name: pylint
         entry: pylint
         language: system
+        args: ["-sn", "-rn"]
         types: [python]
   - repo: https://github.com/pre-commit/mirrors-mypy
-    rev: v0.770
+    rev: v0.931
     hooks:
       - id: mypy
         name: mypy
         entry: mypy
         language: python
         "types": [python]
-        args: ["--ignore-missing-imports", "--scripts-are-modules"]
+        args: [
+            # Uncomment if you want a forgiving mypy (your codebase is not ready)
+            # "--ignore-missing-imports",
+            "--scripts-are-modules",
+            "--install-types",
+            "--non-interactive",
+            # Less forgiving options follows, remove if you're not ready:
+            "--disallow-untyped-defs",
+            "--disallow-untyped-calls",
+            "--disallow-untyped-decorators",
+            "--implicit-reexport",
+            "--explicit-package-bases",
+            "--namespace-packages",
+          ]
         require_serial: true
-        additional_dependencies: []
+  - repo: https://github.com/DavidAnson/markdownlint-cli2
+    rev: v0.4.0
+    hooks:
+      - id: markdownlint-cli2
+        name: markdownlint-cli2
+        description: "Checks the style of Markdown/CommonMark files."
+        entry: markdownlint-cli2
+        language: node
+        types: [markdown]
+        minimum_pre_commit_version: 0.15.0
   - repo: https://github.com/pre-commit/mirrors-prettier
-    rev: v2.4.1
+    rev: v2.5.1
     hooks:
       - id: prettier
         args: [--prose-wrap=always, --print-width=88]
