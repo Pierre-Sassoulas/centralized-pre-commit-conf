@@ -70,19 +70,12 @@ repos:
         entry: mypy
         language: python
         "types": [python]
-        args: [
-            # Uncomment if you want a forgiving mypy (your codebase is not ready)
-            # "--ignore-missing-imports",
+        args:
+          [
+            "--ignore-missing-imports",
             "--scripts-are-modules",
             "--install-types",
             "--non-interactive",
-            # Less forgiving options follows, remove if you're not ready:
-            "--disallow-untyped-defs",
-            "--disallow-untyped-calls",
-            "--disallow-untyped-decorators",
-            "--implicit-reexport",
-            "--explicit-package-bases",
-            "--namespace-packages",
           ]
         require_serial: true
   - repo: https://github.com/DavidAnson/markdownlint-cli2
