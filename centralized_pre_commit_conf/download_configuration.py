@@ -103,7 +103,8 @@ def display_results(results: Dict[str, Result]) -> None:
     if not_replaced != 0:
         plural = "s" if not_replaced > 1 else ""
         warn(
-            f"🔔 {not_replaced} file{plural} not replaced. Use '-f' or '--replace-existing' to force erase. 🔔"
+            f"🔔 {not_replaced} file{plural} not replaced. Use '-f' or "
+            "'--replace-existing' to force erase. 🔔"
         )
     if replaced != 0:
         plural = "s" if replaced > 1 else ""
