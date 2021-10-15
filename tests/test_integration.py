@@ -38,5 +38,8 @@ class TestIntegration(unittest.TestCase):
         sys.argv = command
         with self.assertRaises(SystemExit) as sys_exit:
             run()
-        error_msg = f"{sys_exit} exited with the wrong error code ({sys_exit.exception.code}) for args: {command}"
+        error_msg = (
+            f"{sys_exit} exited with the wrong error code "
+            f"({sys_exit.exception.code}) for args: {command}"
+        )
         assert sys_exit.exception.code == expected_code, error_msg

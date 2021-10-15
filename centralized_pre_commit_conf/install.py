@@ -1,4 +1,7 @@
-"""Install your centralized pre-commit configuration at the root of your local git workdir."""
+"""
+Install your centralized pre-commit configuration at the root of your local git
+workdir.
+"""
 
 import subprocess
 import sys

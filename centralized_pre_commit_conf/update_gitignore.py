@@ -36,7 +36,8 @@ def get_updated_gitignore_content(
     if gitignore_info_text in gitignore_content:
         mode = "w"
         gitignore = gitignore_content.split(f"{gitignore_info_text}\n")
-        text = f"{gitignore[0]}\n{gitignore_info_text}\n{file_to_add}{''.join(gitignore[1:])}"
+        join = "".join(gitignore[1:])
+        text = f"{gitignore[0]}\n{gitignore_info_text}\n{file_to_add}{join}"
     else:
         mode = "a"
         if gitignore_content:
