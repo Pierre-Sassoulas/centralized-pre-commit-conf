@@ -6,7 +6,6 @@ workdir.
 import subprocess
 import sys
 from pathlib import Path
-from typing import List
 
 import confuse
 
@@ -25,14 +24,6 @@ def install(config: confuse.Configuration) -> None:
         update_gitignore(config_files, verbose)
 
 
-def subprocess_compat_mode(commands: List[str]) -> subprocess.CompletedProcess:
-    should_raise = False
-    if sys.version_info.minor >= 7:
-        return subprocess.run(commands, capture_output=True, check=should_raise)
-    # python < 3.7
-    return subprocess.run(commands, capture_output=True, check=should_raise)
-
-
 def install_pre_commit(verbose: bool) -> None:
     if not Path(".pre-commit-config.yaml").exists():
         warn("No '.pre-commit-config.yaml' found, we can't install pre-commit.")
@@ -40,5 +31,5 @@ def install_pre_commit(verbose: bool) -> None:
     init_pre_commit = ["pre-commit", "install"]
     if verbose:
         info(f"Launching : {init_pre_commit}")
-    subprocess_compat_mode(init_pre_commit)
+    subprocess.run(init_pre_commit, capture_output=True, check=False)
     success("🎉 pre-commit installed locally with the current configuration. 🎉")
