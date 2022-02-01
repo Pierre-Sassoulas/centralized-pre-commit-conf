@@ -66,6 +66,7 @@ def display_results(results: Dict[str, Result]) -> None:
     not_replaced: int = 0
     replaced: int = 0
     for file, result in results.items():
+        # pylint: disable-next=consider-using-f-string
         formatted_config: str = "{:{align}{width}}".format(file, align="<", width=max_len)
         if not result.downloaded:
             failed += 1

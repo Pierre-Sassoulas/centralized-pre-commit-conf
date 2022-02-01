@@ -19,7 +19,7 @@ def update_gitignore(config_files: Iterable[str], verbose: bool, path: Union[Pat
     for config_file in config_files:
         if config_file not in gitignore_content:
             if verbose:
-                info("{} is not in the .gitignore".format(config_file))
+                info(f"{config_file} is not in the .gitignore")
             config_files_to_add.add(config_file)
     return write_config_file_to_add(config_files_to_add, "\n".join(gitignore_content), path=path)
 
