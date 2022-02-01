@@ -27,6 +27,8 @@ setup(
         "Programming Language :: Python :: 3.6",
         "Programming Language :: Python :: 3.7",
         "Programming Language :: Python :: 3.8",
+        "Programming Language :: Python :: 3.9",
+        "Programming Language :: Python :: 3.10",
         "Development Status :: 4 - Beta",
     ],
     package_data={"centralized_pre_commit_conf": ["*.cfg", "*.yaml", "*.pylintrc", "*.flake8"]},
