@@ -5,7 +5,7 @@ from setuptools import find_namespace_packages, setup
 with open("README.md", "r", encoding="utf-8") as r:
     README = r.read()
 
-TEST_REQUIRES = ["pytest-cov", "pytest-vcr", "python-coveralls"]
+TEST_REQUIRES = ["pytest-cov", "pytest-vcr", "coverage", "python-coveralls", "coveralls", "pylint"]
 
 
 setup(
