@@ -10,7 +10,7 @@ env:
   PRE_COMMIT_CACHE: ~/.cache/pre-commit
 
 jobs:
-  lint:
+  pylint:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -21,7 +21,8 @@ jobs:
           pip install -e ".[test]"
       - name: Lint
         run: |
-          pre-commit run --all-files
+          # We need to run pylint as it can't be run with pre-commit-ci
+          pre-commit run pylint --all-files
 
   coverage:
     runs-on: ubuntu-latest
