@@ -1,45 +1,45 @@
 repos:
--   repo: https://github.com/myint/autoflake
+  - repo: https://github.com/myint/autoflake
     rev: v1.4
     hooks:
-    -   id: autoflake
+      - id: autoflake
         args:
-            - --in-place
-            - --remove-all-unused-imports
-            - --expand-star-imports
-            - --remove-duplicate-keys
-            - --remove-unused-variables
--   repo: https://github.com/pre-commit/pre-commit-hooks
+          - --in-place
+          - --remove-all-unused-imports
+          - --expand-star-imports
+          - --remove-duplicate-keys
+          - --remove-unused-variables
+  - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v2.2.3
     hooks:
-    -   id: check-merge-conflict
-    -   id: trailing-whitespace
-    -   id: end-of-file-fixer
-    -   id: check-json
-    -   id: check-yaml
-    -   id: check-xml
-    -   id: flake8
+      - id: check-merge-conflict
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: check-json
+      - id: check-yaml
+      - id: check-xml
+      - id: flake8
         args: [--config=.flake8]
--   repo: https://github.com/PyCQA/isort
+  - repo: https://github.com/PyCQA/isort
     rev: 5.5.2
     hooks:
-    -   id: isort
--   repo: https://github.com/ambv/black
+      - id: isort
+  - repo: https://github.com/ambv/black
     rev: 20.8b1
     hooks:
-    - id: black
-      args: [--safe, --quiet, --line-length=120]
--   repo: local
+      - id: black
+        args: [--safe, --quiet, --line-length=120]
+  - repo: local
     hooks:
-    -   id: pylint
+      - id: pylint
         name: pylint
         entry: pylint
         language: system
         types: [python]
--   repo: https://github.com/pre-commit/mirrors-mypy
+  - repo: https://github.com/pre-commit/mirrors-mypy
     rev: v0.770
     hooks:
-    -   id: mypy
+      - id: mypy
         name: mypy
         entry: mypy
         language: python
@@ -47,10 +47,10 @@ repos:
         args: ["--ignore-missing-imports", "--scripts-are-modules"]
         require_serial: true
         additional_dependencies: []
--   repo: https://github.com/igorshubovych/markdownlint-cli
+  - repo: https://github.com/igorshubovych/markdownlint-cli
     rev: v0.23.2
     hooks:
-    -   id: markdownlint
+      - id: markdownlint
         name: markdownlint
         description: "Checks the style of Markdown/Commonmark files."
         entry: markdownlint
