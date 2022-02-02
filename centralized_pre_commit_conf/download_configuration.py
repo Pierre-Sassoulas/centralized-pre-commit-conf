@@ -32,7 +32,11 @@ class Result:
 def download_configuration(config: confuse.Configuration) -> None:
     results = {}
     config_files = config["configuration_files"].get(list)
-    url = get_url_from_args(config["repository"].get(str), config["branch"].get(str), config["path"].get(str))
+    url = get_url_from_args(
+        config["repository"].get(str),
+        config["branch"].get(str),
+        config["path"].get(str),
+    )
     insecure = config["insecure"].get(bool)
     verbose = config["verbose"].get(bool)
     for config_file in config_files:
@@ -52,7 +56,9 @@ def download_configuration(config: confuse.Configuration) -> None:
         if file_already_exists:
             old_content = read_current_file(path)
         result.new_content = old_content != request_result.content
-        if not file_already_exists or (result.new_content and config["replace_existing"].get(bool)):
+        if not file_already_exists or (
+            result.new_content and config["replace_existing"].get(bool)
+        ):
             result.replaced = True
             write_new_content(path, request_result)
         results[config_file] = result
@@ -67,10 +73,14 @@ def display_results(results: Dict[str, Result]) -> None:
     replaced: int = 0
     for file, result in results.items():
         # pylint: disable-next=consider-using-f-string
-        formatted_config: str = "{:{align}{width}}".format(file, align="<", width=max_len)
+        formatted_config: str = "{:{align}{width}}".format(
+            file, align="<", width=max_len
+        )
         if not result.downloaded:
             failed += 1
-            details = f"{result.failed_download.url} HTTP{result.failed_download.status_code}"
+            details = (
+                f"{result.failed_download.url} HTTP{result.failed_download.status_code}"
+            )
             error(f"{formatted_config} : 🎻 Download failed 🎻 : {details}")
         elif not result.new_content:
             no_new_content += 1
@@ -92,7 +102,9 @@ def display_results(results: Dict[str, Result]) -> None:
         success(f"✨ {no_new_content} configuration file{plural} already up to date ✨")
     if not_replaced != 0:
         plural = "s" if not_replaced > 1 else ""
-        warn(f"🔔 {not_replaced} file{plural} not replaced. Use '-f' or '--replace-existing' to force erase. 🔔")
+        warn(
+            f"🔔 {not_replaced} file{plural} not replaced. Use '-f' or '--replace-existing' to force erase. 🔔"
+        )
     if replaced != 0:
         plural = "s" if replaced > 1 else ""
         success(f"🎉✨ {replaced} configuration file{plural} updated. ✨🎉")
