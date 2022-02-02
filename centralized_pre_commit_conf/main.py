@@ -14,7 +14,9 @@ def run():
     try:
         config = parse_args(config)
     except confuse.ConfigError as e:
-        error(f"Problem with your configuration file in {[s.filename for s in config.sources]}: {e}")
+        error(
+            f"Problem with your configuration file in {[s.filename for s in config.sources]}: {e}"
+        )
         sys.exit(ExitCode.PRE_COMMIT_CONF_NOT_FOUND.value)
     config_path = Path(config.config_dir()).resolve() / "config.yaml"
     if not config_path.exists():

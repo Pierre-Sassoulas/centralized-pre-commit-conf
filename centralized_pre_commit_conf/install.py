@@ -27,7 +27,7 @@ def subprocess_compat_mode(commands: List[str]) -> subprocess.CompletedProcess:
     if sys.version_info.minor >= 7:
         return subprocess.run(commands, capture_output=True, check=should_raise)
     # python < 3.7
-    return subprocess.run(commands, stdout=subprocess.PIPE, stderr=subprocess.PIPE, check=should_raise)
+    return subprocess.run(commands, capture_output=True, check=should_raise)
 
 
 def install_pre_commit(verbose: bool) -> None:
