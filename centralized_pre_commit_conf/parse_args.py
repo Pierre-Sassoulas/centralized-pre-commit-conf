@@ -18,7 +18,7 @@ def get_url_from_args(url: str, branch: str, path: str) -> str:
     return f"{url}"
 
 
-def parse_args(config) -> confuse.Configuration:
+def parse_args(config: confuse.Configuration) -> confuse.Configuration:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument(
         "-r",

@@ -11,13 +11,13 @@ URL = "https://raw.githubusercontent.com/Pierre-Sassoulas/centralized-pre-commit
 
 @pytest.mark.vcr()
 class TestIntegration(unittest.TestCase):
-    def test_help(self):
+    def test_help(self) -> None:
         self.assert_exit_with_code(["pre-commit-conf", "-h"], 0)
 
-    def test_bad_arg(self):
+    def test_bad_arg(self) -> None:
         self.assert_exit_with_code(["pre-commit-conf", "--not-exist"], 2)
 
-    def test_normal_args(self):
+    def test_normal_args(self) -> None:
         self.assert_exit_with_code(
             [
                 "pre-commit-conf",
@@ -34,7 +34,7 @@ class TestIntegration(unittest.TestCase):
             0,
         )
 
-    def assert_exit_with_code(self, command: List[str], expected_code: int):
+    def assert_exit_with_code(self, command: List[str], expected_code: int) -> None:
         sys.argv = command
         with self.assertRaises(SystemExit) as sys_exit:
             run()
