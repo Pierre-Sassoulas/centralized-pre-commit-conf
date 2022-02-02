@@ -72,7 +72,6 @@ repos:
         types: [python]
         args:
           [
-            "--strict",
             "--ignore-missing-imports",
             "--install-types",
             "--non-interactive",
