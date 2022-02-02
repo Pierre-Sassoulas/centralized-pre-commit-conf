@@ -19,13 +19,12 @@ class Result:
     replaced: bool
     failed_download: requests.Response
 
-    def __init__(self):
+    def __init__(self) -> None:
         self.downloaded = False
         self.new_content = False
         self.replaced = False
-        self.failed_download = None
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return f"{self.downloaded} {self.replaced} {self.new_content}"
 
 

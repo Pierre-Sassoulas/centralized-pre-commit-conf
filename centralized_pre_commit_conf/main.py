@@ -9,7 +9,7 @@ from centralized_pre_commit_conf.parse_args import parse_args
 from centralized_pre_commit_conf.prints import error, info
 
 
-def run():
+def run() -> None:
     config = confuse.Configuration(APPLICATION_NAME, __name__)
     try:
         config = parse_args(config)

@@ -4,7 +4,7 @@ from centralized_pre_commit_conf.parse_args import get_url_from_args
 
 
 class TestGetUrlFromArgs(unittest.TestCase):
-    def test_all_args(self):
+    def test_all_args(self) -> None:
         self.assertEqual(
             get_url_from_args("http://a.net", "master", "path"),
             "http://a.net/master/path",

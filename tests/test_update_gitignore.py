@@ -6,7 +6,7 @@ GITIGNORE_INFO_TEXT = "# fervpierpvjepvjpvjepvjperjverpovpeorvpor"
 
 
 class TestUpdateGitignore(unittest.TestCase):
-    def test_nothing(self):
+    def test_nothing(self) -> None:
         text, mode = get_updated_gitignore_content(
             "", {"a", "b", "c"}, GITIGNORE_INFO_TEXT
         )
@@ -20,7 +20,7 @@ c
 """,
         )
 
-    def test_something(self):
+    def test_something(self) -> None:
         text, mode = get_updated_gitignore_content(
             "d\ne\n", {"a", "b", "c"}, GITIGNORE_INFO_TEXT
         )
@@ -35,7 +35,7 @@ c
 """,
         )
 
-    def test_old_cppc_data(self):
+    def test_old_cppc_data(self) -> None:
         text, mode = get_updated_gitignore_content(
             f"d\ne\n{GITIGNORE_INFO_TEXT}\nf\ng\n", {"a", "b", "c"}, GITIGNORE_INFO_TEXT
         )
@@ -54,7 +54,7 @@ g
 """,
         )
 
-    def test_duplicated_old_cppc_data(self):
+    def test_duplicated_old_cppc_data(self) -> None:
         text, mode = get_updated_gitignore_content(
             f"""d
 e
@@ -87,7 +87,7 @@ i
 """,
         )
 
-    def test_real_data(self):
+    def test_real_data(self) -> None:
         text, mode = get_updated_gitignore_content(
             f""".idea/
 *.egg-info/
