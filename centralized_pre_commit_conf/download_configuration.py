@@ -7,6 +7,7 @@ import confuse
 import requests
 from urllib3.exceptions import InsecureRequestWarning
 
+from centralized_pre_commit_conf.constants import TIMEOUT
 from centralized_pre_commit_conf.parse_args import get_url_from_args
 from centralized_pre_commit_conf.prints import error, info, success, warn
 
@@ -113,9 +114,9 @@ def display_results(results: Dict[str, Result]) -> None:
 def recover_new_content(config_file_url: str, insecure: bool) -> requests.Response:
     with warnings.catch_warnings(record=True) as messages:
         if insecure:
-            result = requests.get(config_file_url, verify=False)
+            result = requests.get(config_file_url, verify=False, timeout=TIMEOUT)
         else:
-            result = requests.get(config_file_url)
+            result = requests.get(config_file_url, timeout=TIMEOUT)
         for msg in messages:
             if not insecure or msg.category is not InsecureRequestWarning:
                 warn(msg.message)
