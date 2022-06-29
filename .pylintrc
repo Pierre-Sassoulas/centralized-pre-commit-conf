@@ -7,7 +7,6 @@ disable=
     missing-docstring, # Sometime it is self explanatory
     wrong-import-order, # Handled by isort
     ungrouped-imports, # Handled by isort
-    no-self-use, # literally a convention that do not change anything
     too-few-public-methods, # Lot of classes can validly have only one method
     too-many-instance-attributes, # Too much work
     too-many-locals, # Too much work

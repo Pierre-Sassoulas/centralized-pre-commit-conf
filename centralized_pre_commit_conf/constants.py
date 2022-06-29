@@ -1,6 +1,7 @@
 import enum
 
 APPLICATION_NAME = "pre-commit-conf"
+TIMEOUT = 10.0
 
 
 class ExitCode(enum.Enum):
