@@ -22,7 +22,7 @@ repos:
     hooks:
       - id: isort
   - repo: https://github.com/asottile/pyupgrade
-    rev: v2.34.0
+    rev: v2.37.1
     hooks:
       - id: pyupgrade
         args: [--py37-plus]
@@ -41,7 +41,7 @@ repos:
       - id: black
         args: [--safe, --quiet]
   - repo: https://github.com/DanielNoord/pydocstringformatter
-    rev: v0.6.1
+    rev: v0.6.2
     hooks:
       - id: pydocstringformatter
         args: ["--max-summary-lines=2", "--linewrap-full-docstring"]
