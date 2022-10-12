@@ -10,39 +10,39 @@ class TestUpdateGitignore(unittest.TestCase):
         text, mode = get_updated_gitignore_content(
             "", {"a", "b", "c"}, GITIGNORE_INFO_TEXT
         )
-        self.assertEqual(mode, "a")
-        self.assertEqual(
-            text,
-            f"""{GITIGNORE_INFO_TEXT}
+        assert mode == "a"
+        assert (
+            text
+            == f"""{GITIGNORE_INFO_TEXT}
 a
 b
 c
-""",
+"""
         )
 
     def test_something(self) -> None:
         text, mode = get_updated_gitignore_content(
             "d\ne\n", {"a", "b", "c"}, GITIGNORE_INFO_TEXT
         )
-        self.assertEqual(mode, "a")
-        self.assertEqual(
-            text,
-            f"""
+        assert mode == "a"
+        assert (
+            text
+            == f"""
 {GITIGNORE_INFO_TEXT}
 a
 b
 c
-""",
+"""
         )
 
     def test_old_cppc_data(self) -> None:
         text, mode = get_updated_gitignore_content(
             f"d\ne\n{GITIGNORE_INFO_TEXT}\nf\ng\n", {"a", "b", "c"}, GITIGNORE_INFO_TEXT
         )
-        self.assertEqual(mode, "w")
-        self.assertEqual(
-            text,
-            f"""d
+        assert mode == "w"
+        assert (
+            text
+            == f"""d
 e
 
 {GITIGNORE_INFO_TEXT}
@@ -51,7 +51,7 @@ b
 c
 f
 g
-""",
+"""
         )
 
     def test_duplicated_old_cppc_data(self) -> None:
@@ -69,10 +69,10 @@ i
             {"a", "b", "c"},
             GITIGNORE_INFO_TEXT,
         )
-        self.assertEqual(mode, "w")
-        self.assertEqual(
-            text,
-            f"""d
+        assert mode == "w"
+        assert (
+            text
+            == f"""d
 e
 
 {GITIGNORE_INFO_TEXT}
@@ -84,7 +84,7 @@ g
 
 h
 i
-""",
+"""
         )
 
     def test_real_data(self) -> None:
@@ -104,10 +104,10 @@ dist/
             {".clang-format", ".clang-tidy", ".csslintrc"},
             GITIGNORE_INFO_TEXT,
         )
-        self.assertEqual(mode, "w")
-        self.assertEqual(
-            text,
-            f""".idea/
+        assert mode == "w"
+        assert (
+            text
+            == f""".idea/
 *.egg-info/
 
 
@@ -122,5 +122,5 @@ dist/
 
 build/
 dist/
-""",
+"""
         )
