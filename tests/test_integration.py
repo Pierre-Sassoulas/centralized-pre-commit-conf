@@ -1,5 +1,4 @@
 import sys
-import unittest
 from typing import List
 
 import pytest
@@ -10,7 +9,7 @@ URL = "https://raw.githubusercontent.com/Pierre-Sassoulas/centralized-pre-commit
 
 
 @pytest.mark.vcr()
-class TestIntegration(unittest.TestCase):
+class TestIntegration:
     def test_help(self) -> None:
         self.assert_exit_with_code(["pre-commit-conf", "-h"], 0)
 
@@ -36,10 +35,10 @@ class TestIntegration(unittest.TestCase):
 
     def assert_exit_with_code(self, command: List[str], expected_code: int) -> None:
         sys.argv = command
-        with self.assertRaises(SystemExit) as sys_exit:
+        with pytest.raises(SystemExit) as sys_exit:
             run()
         error_msg = (
             f"{sys_exit} exited with the wrong error code "
-            f"({sys_exit.exception.code}) for args: {command}"
+            f"({sys_exit.value.code}) for args: {command}"
         )
-        assert sys_exit.exception.code == expected_code, error_msg
+        assert sys_exit.value.code == expected_code, error_msg
