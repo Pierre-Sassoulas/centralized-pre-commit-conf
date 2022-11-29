@@ -27,7 +27,7 @@ def install(config: confuse.Configuration) -> None:
 def install_pre_commit(verbose: bool) -> None:
     if not Path(".pre-commit-config.yaml").exists():
         warn("No '.pre-commit-config.yaml' found, we can't install pre-commit.")
-        sys.exit(ExitCode.PRE_COMMIT_CONF_NOT_FOUND)
+        sys.exit(ExitCode.PRE_COMMIT_CONF_NOT_FOUND.value)
     init_pre_commit = ["pre-commit", "install"]
     if verbose:
         info(f"Launching : {init_pre_commit}")
