@@ -3,7 +3,7 @@ ci:
 
 repos:
   - repo: https://github.com/PyCQA/autoflake
-    rev: v2.0.2
+    rev: v2.1.1
     hooks:
       - id: autoflake
         args:
@@ -22,12 +22,12 @@ repos:
     hooks:
       - id: isort
   - repo: https://github.com/asottile/pyupgrade
-    rev: v3.3.1
+    rev: v3.4.0
     hooks:
       - id: pyupgrade
         args: [--py37-plus]
   - repo: https://github.com/guilatrova/tryceratops
-    rev: v1.1.0
+    rev: v2.3.2
     hooks:
       - id: tryceratops
   - repo: https://github.com/asottile/blacken-docs
@@ -68,7 +68,7 @@ repos:
         args: ["-sn", "-rn"]
         types: [python]
   - repo: https://github.com/pre-commit/mirrors-mypy
-    rev: v1.1.1
+    rev: v1.3.0
     hooks:
       - id: mypy
         name: mypy
@@ -79,7 +79,7 @@ repos:
         additional_dependencies: [types-requests==2.27.9]
         require_serial: true
   - repo: https://github.com/DavidAnson/markdownlint-cli2
-    rev: v0.6.0
+    rev: v0.7.1
     hooks:
       - id: markdownlint-cli2
         name: markdownlint-cli2
@@ -89,7 +89,7 @@ repos:
         types: [markdown]
         minimum_pre_commit_version: 0.15.0
   - repo: https://github.com/pre-commit/mirrors-prettier
-    rev: v3.0.0-alpha.6
+    rev: v3.0.0-alpha.9-for-vscode
     hooks:
       - id: prettier
         args: [--prose-wrap=always, --print-width=88]
