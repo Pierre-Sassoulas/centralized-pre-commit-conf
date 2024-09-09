@@ -79,7 +79,7 @@ repos:
         additional_dependencies: [types-requests==2.27.9]
         require_serial: true
   - repo: https://github.com/DavidAnson/markdownlint-cli2
-    rev: v0.13.0
+    rev: v0.14.0
     hooks:
       - id: markdownlint-cli2
         name: markdownlint-cli2
