@@ -12,11 +12,6 @@ repos:
           - --expand-star-imports
           - --remove-duplicate-keys
           - --remove-unused-variables
-  - repo: https://github.com/Pierre-Sassoulas/remove-empty-comment
-    rev: 1.1.0
-    hooks:
-      - id: remove-empty-comment
-        args: [--meaningless-characters, "-= "]
   - repo: https://github.com/PyCQA/isort
     rev: 5.13.2
     hooks:
@@ -31,12 +26,12 @@ repos:
     hooks:
       - id: tryceratops
   - repo: https://github.com/asottile/blacken-docs
-    rev: 1.18.0
+    rev: 1.19.0
     hooks:
       - id: blacken-docs
         additional_dependencies: [black==22.10.0]
   - repo: https://github.com/psf/black
-    rev: 24.8.0
+    rev: 24.10.0
     hooks:
       - id: black
         args: [--safe, --quiet]
@@ -46,7 +41,7 @@ repos:
       - id: pydocstringformatter
         args: ["--max-summary-lines=2", "--linewrap-full-docstring"]
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.6.0
+    rev: v5.0.0
     hooks:
       - id: check-merge-conflict
       - id: trailing-whitespace
