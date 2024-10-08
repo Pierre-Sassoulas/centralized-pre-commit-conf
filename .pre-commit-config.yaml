@@ -16,7 +16,7 @@ repos:
     rev: 1.1.0
     hooks:
       - id: remove-empty-comment
-        args: [--meaningless-characters "-= "]
+        args: [--meaningless-characters, '-= ']
   - repo: https://github.com/PyCQA/isort
     rev: 5.13.2
     hooks:
