@@ -12,11 +12,6 @@ repos:
           - --expand-star-imports
           - --remove-duplicate-keys
           - --remove-unused-variables
-  - repo: https://github.com/Pierre-Sassoulas/remove-empty-comment
-    rev: 1.1.0
-    hooks:
-      - id: remove-empty-comment
-        args: [--meaningless-characters, "-= "]
   - repo: https://github.com/PyCQA/isort
     rev: 5.13.2
     hooks:
