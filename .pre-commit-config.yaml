@@ -13,20 +13,20 @@ repos:
           - --remove-duplicate-keys
           - --remove-unused-variables
   - repo: https://github.com/PyCQA/isort
-    rev: 5.13.2
+    rev: 6.0.0
     hooks:
       - id: isort
   - repo: https://github.com/asottile/pyupgrade
-    rev: v3.17.0
+    rev: v3.19.1
     hooks:
       - id: pyupgrade
         args: [--py37-plus]
   - repo: https://github.com/guilatrova/tryceratops
-    rev: v2.4.0
+    rev: v2.4.1
     hooks:
       - id: tryceratops
   - repo: https://github.com/asottile/blacken-docs
-    rev: 1.19.0
+    rev: 1.19.1
     hooks:
       - id: blacken-docs
         additional_dependencies: [black==22.10.0]
@@ -63,7 +63,7 @@ repos:
         args: ["-sn", "-rn"]
         types: [python]
   - repo: https://github.com/pre-commit/mirrors-mypy
-    rev: v1.11.2
+    rev: v1.14.1
     hooks:
       - id: mypy
         name: mypy
@@ -74,7 +74,7 @@ repos:
         additional_dependencies: [types-requests==2.27.9]
         require_serial: true
   - repo: https://github.com/DavidAnson/markdownlint-cli2
-    rev: v0.14.0
+    rev: v0.17.2
     hooks:
       - id: markdownlint-cli2
         name: markdownlint-cli2
