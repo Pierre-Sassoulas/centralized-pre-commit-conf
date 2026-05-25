@@ -11,38 +11,30 @@ class TestUpdateGitignore(unittest.TestCase):
             "", {"a", "b", "c"}, GITIGNORE_INFO_TEXT
         )
         assert mode == "a"
-        assert (
-            text
-            == f"""{GITIGNORE_INFO_TEXT}
+        assert text == f"""{GITIGNORE_INFO_TEXT}
 a
 b
 c
 """
-        )
 
     def test_something(self) -> None:
         text, mode = get_updated_gitignore_content(
             "d\ne\n", {"a", "b", "c"}, GITIGNORE_INFO_TEXT
         )
         assert mode == "a"
-        assert (
-            text
-            == f"""
+        assert text == f"""
 {GITIGNORE_INFO_TEXT}
 a
 b
 c
 """
-        )
 
     def test_old_cppc_data(self) -> None:
         text, mode = get_updated_gitignore_content(
             f"d\ne\n{GITIGNORE_INFO_TEXT}\nf\ng\n", {"a", "b", "c"}, GITIGNORE_INFO_TEXT
         )
         assert mode == "w"
-        assert (
-            text
-            == f"""d
+        assert text == f"""d
 e
 
 {GITIGNORE_INFO_TEXT}
@@ -52,7 +44,6 @@ c
 f
 g
 """
-        )
 
     def test_duplicated_old_cppc_data(self) -> None:
         text, mode = get_updated_gitignore_content(
@@ -70,9 +61,7 @@ i
             GITIGNORE_INFO_TEXT,
         )
         assert mode == "w"
-        assert (
-            text
-            == f"""d
+        assert text == f"""d
 e
 
 {GITIGNORE_INFO_TEXT}
@@ -85,7 +74,6 @@ g
 h
 i
 """
-        )
 
     def test_real_data(self) -> None:
         text, mode = get_updated_gitignore_content(
@@ -105,9 +93,7 @@ dist/
             GITIGNORE_INFO_TEXT,
         )
         assert mode == "w"
-        assert (
-            text
-            == f""".idea/
+        assert text == f""".idea/
 *.egg-info/
 
 
@@ -123,4 +109,3 @@ dist/
 build/
 dist/
 """
-        )
