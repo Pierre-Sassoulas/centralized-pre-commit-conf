@@ -12,13 +12,13 @@ class TestGitignoreEntries(unittest.TestCase):
     def test_no_cache_files(self) -> None:
         assert get_gitignore_entries([".pylintrc"]) == {".pylintrc"}
 
-    def test_cache_files_added_for_installed_tool(self) -> None:
+    def test_cache_added(self) -> None:
         entries = get_gitignore_entries(
             ["mypy.ini", ".pylintrc"], {"mypy.ini": [".mypy_cache/"]}
         )
         assert entries == {"mypy.ini", ".pylintrc", ".mypy_cache/"}
 
-    def test_cache_files_ignored_when_tool_not_installed(self) -> None:
+    def test_cache_skipped_no_tool(self) -> None:
         entries = get_gitignore_entries([".pylintrc"], {"mypy.ini": [".mypy_cache/"]})
         assert entries == {".pylintrc"}
 
