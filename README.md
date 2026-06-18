@@ -99,6 +99,72 @@ All configuration files already existed.
 Next commit supposing the `.pre-commit-config.yaml` is done correctly your modified
 files we be linted with the centralized configuration.
 
+### Private repositories (authentication)
+
+If your configuration lives in a private repository, an unauthenticated request is
+redirected to a login page and the HTML of that page would be downloaded instead of your
+configuration file. `pre-commit-conf` detects that redirection and reports a failed
+download asking you to provide a token.
+
+To authenticate, provide a token. The token is sent as the `PRIVATE-TOKEN` header on
+every request.
+
+You do **not** need a broad token: `pre-commit-conf` only reads from the single
+repository that holds your centralized configuration, so grant the least privilege that
+works. On GitLab, prefer a
+[Project Access Token](https://docs.gitlab.com/ee/user/project/settings/project_access_tokens.html)
+created on that one configuration repository, with only the `read_repository` scope. A
+Group Access Token (if the configuration repository may move within a group) or a
+Personal Access Token also work, but a Personal Access Token can read every repository
+your account can access — if it leaks, everything leaks — so avoid it unless necessary.
+
+On GitLab, set `provider: gitlab`. The `read_repository` scope authenticates against the
+[Repository Files API](https://docs.gitlab.com/ee/api/repository_files.html), not the
+`/-/raw/` web endpoint (which only accepts a browser session), so `pre-commit-conf`
+fetches each file through the API. Point `repository` at the project's web URL — the
+host and project path are enough, the API URL is built for you:
+
+```yaml
+configuration_files:
+  - ".pylintrc"
+  - ".pre-commit-config.yaml"
+repository: https://gitlab.mycompany.net/admin-sys/internal-pre-commit-conf
+provider: gitlab
+branch: master
+path: ""
+```
+
+Then supply the token using one of the following (precedence: CLI > config > env var — a
+`token` set in a config file shadows the environment variable):
+
+1. **Environment variable (recommended)** — set it once, used on every run, never stored
+   in a committed file:
+
+   ```bash
+   export PRE_COMMIT_CONF_TOKEN="glpat-xxxxxxxxxxxxxxxxxxxx"
+   pre-commit-conf
+   ```
+
+2. **Config file** — convenient but keep the file out of version control, it contains a
+   secret:
+
+   ```yaml
+   token: "glpat-xxxxxxxxxxxxxxxxxxxx"
+   ```
+
+3. **Command line** — avoid for real tokens, it leaks into your shell history and the
+   process list:
+
+   ```bash
+   pre-commit-conf --token "glpat-xxxxxxxxxxxxxxxxxxxx"
+   ```
+
+In CI, store the token as a masked/protected variable named `PRE_COMMIT_CONF_TOKEN`.
+
+Setup is a one-time thing: configure the repository once and keep the token available
+(in your shell profile or CI secrets) so every run authenticates automatically. The only
+recurring task is renewing the token when it expires.
+
 ## Development / contribution
 
 ```bash
