@@ -1,0 +1,4 @@
+# Configuration file added automatically by 'centralized-pre-commit-conf'
+.mypy_cache/
+.pre-commit-config.yaml
+mypy.ini

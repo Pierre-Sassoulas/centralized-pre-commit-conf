@@ -1,0 +1,8 @@
+venv/
+
+# Configuration file added automatically by 'centralized-pre-commit-conf'
+.a_cache/
+.b_cache/
+.ruff_cache/
+ruff.toml
+tool.cfg
