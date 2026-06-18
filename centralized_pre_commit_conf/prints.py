@@ -6,7 +6,7 @@ from colorama import Fore, init
 init()
 
 
-def echo(color: Fore, message: Union[Warning, str]) -> None:
+def echo(color: Fore, message: Warning | str) -> None:
     """Also permits to print emojis on Windows.
 
     To support non-UTF-8 environments like Windows, we need
@@ -19,7 +19,7 @@ def info(message: str) -> None:
     echo(Fore.BLUE, message)
 
 
-def warn(message: Union[Warning, str]) -> None:
+def warn(message: Warning | str) -> None:
     echo(Fore.YELLOW, message)
 
 

@@ -1,6 +1,7 @@
 import os
 from pathlib import Path
-from typing import Iterable, Set, Tuple, Union
+from typing import Set, Tuple, Union
+from collections.abc import Iterable
 
 import confuse
 
@@ -9,7 +10,7 @@ from centralized_pre_commit_conf.prints import info, success, warn
 
 
 def update_gitignore(
-    config_files: Iterable[str], verbose: bool, path: Union[Path, str] = ".gitignore"
+    config_files: Iterable[str], verbose: bool, path: Path | str = ".gitignore"
 ) -> None:
     """Set up the .gitignore for the whole team."""
     if not os.path.isfile(path):
@@ -29,8 +30,8 @@ def update_gitignore(
 
 
 def get_updated_gitignore_content(
-    gitignore_content: str, config_files_to_add: Set[str], gitignore_info_text: str
-) -> Tuple[str, str]:
+    gitignore_content: str, config_files_to_add: set[str], gitignore_info_text: str
+) -> tuple[str, str]:
     text = ""
     file_to_add = "{}\n".format("\n".join(sorted(config_files_to_add)))
     if gitignore_info_text in gitignore_content:
@@ -47,7 +48,7 @@ def get_updated_gitignore_content(
 
 
 def write_config_file_to_add(
-    config_files_to_add: Iterable[str], gitignore_content: str, path: Union[Path, str]
+    config_files_to_add: Iterable[str], gitignore_content: str, path: Path | str
 ) -> None:
     if not config_files_to_add:
         return

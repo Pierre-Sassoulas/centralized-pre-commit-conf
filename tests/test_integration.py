@@ -33,7 +33,7 @@ class TestIntegration:
             0,
         )
 
-    def assert_exit_with_code(self, command: List[str], expected_code: int) -> None:
+    def assert_exit_with_code(self, command: list[str], expected_code: int) -> None:
         sys.argv = command
         with pytest.raises(SystemExit) as sys_exit:
             run()
