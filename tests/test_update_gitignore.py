@@ -1,8 +1,32 @@
 import unittest
 
-from centralized_pre_commit_conf.update_gitignore import get_updated_gitignore_content
+from centralized_pre_commit_conf.update_gitignore import (
+    get_gitignore_entries,
+    get_updated_gitignore_content,
+)
 
 GITIGNORE_INFO_TEXT = "# fervpierpvjepvjpvjepvjperjverpovpeorvpor"
+
+
+class TestGitignoreEntries(unittest.TestCase):
+    def test_no_cache_files(self) -> None:
+        assert get_gitignore_entries([".pylintrc"]) == {".pylintrc"}
+
+    def test_cache_files_added_for_installed_tool(self) -> None:
+        entries = get_gitignore_entries(
+            ["mypy.ini", ".pylintrc"], {"mypy.ini": [".mypy_cache/"]}
+        )
+        assert entries == {"mypy.ini", ".pylintrc", ".mypy_cache/"}
+
+    def test_cache_files_ignored_when_tool_not_installed(self) -> None:
+        entries = get_gitignore_entries([".pylintrc"], {"mypy.ini": [".mypy_cache/"]})
+        assert entries == {".pylintrc"}
+
+    def test_several_cache_entries(self) -> None:
+        entries = get_gitignore_entries(
+            ["tool.cfg"], {"tool.cfg": [".a_cache/", ".b_cache/"]}
+        )
+        assert entries == {"tool.cfg", ".a_cache/", ".b_cache/"}
 
 
 class TestUpdateGitignore(unittest.TestCase):
