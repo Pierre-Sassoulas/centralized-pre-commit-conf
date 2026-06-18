@@ -1,7 +1,6 @@
 import os
 import warnings
 from pathlib import Path
-from typing import Dict
 
 import confuse
 import requests
@@ -65,7 +64,7 @@ def download_configuration(config: confuse.Configuration) -> None:
     display_results(results)
 
 
-def display_results(results: Dict[str, Result]) -> None:
+def display_results(results: dict[str, Result]) -> None:
     max_len: int = max(len(c) for c in results)
     failed: int = 0
     no_new_content: int = 0
