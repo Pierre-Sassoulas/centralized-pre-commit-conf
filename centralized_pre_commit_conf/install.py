@@ -21,7 +21,8 @@ def install(config: confuse.Configuration) -> None:
     download_configuration(config)
     install_pre_commit(verbose)
     if config["update_gitignore"].get(bool):
-        update_gitignore(config_files, verbose)
+        cache_files = config["cache_files"].get(dict)
+        update_gitignore(config_files, verbose, cache_files)
 
 
 def install_pre_commit(verbose: bool) -> None:

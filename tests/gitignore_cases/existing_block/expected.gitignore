@@ -1,0 +1,11 @@
+.idea/
+*.egg-info/
+
+
+# Configuration file added automatically by 'centralized-pre-commit-conf'
+.pytest_cache/
+pytest.ini
+.pre-commit-config.yaml
+
+build/
+dist/

@@ -40,6 +40,7 @@ Homepage = "https://github.com/Pierre-Sassoulas/centralized-pre-commit-conf"
 test = [
     "pytest-cov",
     "pytest-vcr",
+    "pytest-remaster",
     "coverage",
     "python-coveralls",
     "coveralls",
@@ -48,6 +49,10 @@ test = [
 
 [project.scripts]
 pre-commit-conf = "centralized_pre_commit_conf.main:run"
+
+[tool.pytest.ini_options]
+# Golden masters are compared strictly; regenerate locally with --remaster.
+remaster-by-default = false
 
 [tool.setuptools]
 package-dir = {}

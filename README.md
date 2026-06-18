@@ -85,6 +85,36 @@ Here would the content of the `.gitignore`:
 .pylintrc
 ```
 
+### Ignoring tool cache files
+
+Some tools write a cache to the work directory (`mypy` creates `.mypy_cache/`, `pytest`
+creates `.pytest_cache/`, `ruff` creates `.ruff_cache/`, ...). These caches can be added
+to the `.gitignore` automatically. `cache_files` maps a tool's configuration file to the
+cache entries it generates; when that configuration file is installed and
+`update_gitignore` is on, its cache entries are added to the `.gitignore` alongside the
+configuration file:
+
+```yaml
+configuration_files:
+  - "mypy.ini"
+  - ".pre-commit-config.yaml"
+update_gitignore: True
+cache_files:
+  "mypy.ini": [".mypy_cache/"]
+```
+
+resulting in:
+
+```ini
+# Configuration file added automatically by 'centralized-pre-commit-conf'
+.mypy_cache/
+.pre-commit-config.yaml
+mypy.ini
+```
+
+The default configuration already maps `mypy`, `pytest` and `ruff`. Add your own tools
+by extending `cache_files`.
+
 Then with the same configuration, using `pre-commit-conf --branch hardcore-pylint-conf`
 would try to recover the configuration files from
 `https://mycompany.net/lint-conf/hardcore-pylint-conf/pre-commit/static/` instead.
