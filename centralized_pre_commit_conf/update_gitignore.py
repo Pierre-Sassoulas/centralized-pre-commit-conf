@@ -1,7 +1,6 @@
 import os
-from pathlib import Path
-from typing import Set, Tuple, Union
 from collections.abc import Iterable
+from pathlib import Path
 
 import confuse
 

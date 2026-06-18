@@ -1,7 +1,6 @@
 import os
 import warnings
 from pathlib import Path
-from typing import Dict
 
 import confuse
 import requests

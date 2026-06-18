@@ -1,5 +1,4 @@
 import sys
-from typing import Union
 
 from colorama import Fore, init
 
