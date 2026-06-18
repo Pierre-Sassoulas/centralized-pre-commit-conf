@@ -56,7 +56,7 @@ def parse_args(config: confuse.Configuration) -> confuse.Configuration:
         help="Git repository URL",
     )
     parser.add_argument(
-        "-b", "--branch", default=config["branch"].get("str"), help="Git branch"
+        "-b", "--branch", default=config["branch"].get(str), help="Git branch"
     )
     parser.add_argument(
         "-t",

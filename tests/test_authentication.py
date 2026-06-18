@@ -8,7 +8,7 @@ from centralized_pre_commit_conf.download_configuration import (
 
 class TestAuthenticationHeaders:
     def test_no_token(self) -> None:
-        assert _authentication_headers("") == {}
+        assert not _authentication_headers("")
 
     def test_with_token(self) -> None:
         assert _authentication_headers("secret") == {"PRIVATE-TOKEN": "secret"}

@@ -2,7 +2,7 @@ from centralized_pre_commit_conf.parse_args import build_config_file_url
 
 
 class TestBuildConfigFileUrl:
-    def test_raw_provider_templates_url(self) -> None:
+    def test_raw_url(self) -> None:
         assert (
             build_config_file_url(
                 "raw",
@@ -14,7 +14,7 @@ class TestBuildConfigFileUrl:
             == "https://raw.githubusercontent.com/owner/repo/master/static/.flake8"
         )
 
-    def test_raw_provider_without_path(self) -> None:
+    def test_raw_url_without_path(self) -> None:
         assert (
             build_config_file_url(
                 "raw", "https://a.net/owner/repo", "main", "", ".pylintrc"
@@ -22,7 +22,7 @@ class TestBuildConfigFileUrl:
             == "https://a.net/owner/repo/main/.pylintrc"
         )
 
-    def test_gitlab_provider_uses_files_api(self) -> None:
+    def test_gitlab_files_api_url(self) -> None:
         assert build_config_file_url(
             "gitlab",
             "https://gitlab.e-lum.io/admin-sys/internal-pre-commit-conf",
@@ -35,7 +35,7 @@ class TestBuildConfigFileUrl:
             ".pre-commit-config.yaml/raw?ref=master"
         )
 
-    def test_gitlab_provider_encodes_path_and_trailing_slash(self) -> None:
+    def test_gitlab_url_encoding(self) -> None:
         assert build_config_file_url(
             "gitlab",
             "https://gitlab.e-lum.io/group/sub/project/",
