@@ -6,8 +6,8 @@ import confuse
 import requests
 from urllib3.exceptions import InsecureRequestWarning
 
-from centralized_pre_commit_conf.constants import TIMEOUT
-from centralized_pre_commit_conf.parse_args import get_url_from_args
+from centralized_pre_commit_conf.constants import TIMEOUT, TOKEN_ENV_VAR
+from centralized_pre_commit_conf.parse_args import build_config_file_url
 from centralized_pre_commit_conf.prints import error, info, success, warn
 
 
@@ -31,25 +31,29 @@ class Result:
 def download_configuration(config: confuse.Configuration) -> None:
     results = {}
     config_files = config["configuration_files"].get(list)
-    url = get_url_from_args(
-        config["repository"].get(str),
-        config["branch"].get(str),
-        config["path"].get(str),
-    )
+    provider = config["provider"].get(str)
+    repository = config["repository"].get(str)
+    branch = config["branch"].get(str)
+    config_path = config["path"].get(str)
     insecure = config["insecure"].get(bool)
     verbose = config["verbose"].get(bool)
+    token = config["token"].get(str) or os.environ.get(TOKEN_ENV_VAR, "")
+    if token and verbose:
+        info("Authenticating with the provided token.")
     for config_file in config_files:
         result = Result()
-        config_file_url = f"{url}/{config_file}"
+        config_file_url = build_config_file_url(
+            provider, repository, branch, config_path, config_file
+        )
         if verbose:
             info(f"Downloading '{config_file}' from '{config_file_url}'")
-        request_result = recover_new_content(config_file_url, insecure)
-        result.downloaded = request_result.status_code == 200
+        request_result = recover_new_content(config_file_url, token, insecure)
+        result.downloaded = is_successful_download(request_result)
         if not result.downloaded:
             result.failed_download = request_result
             results[config_file] = result
             continue
-        path = Path(config_file_url)
+        path = Path(config_file)
         old_content = None
         file_already_exists = os.path.exists(config_file)
         if file_already_exists:
@@ -110,16 +114,44 @@ def display_results(results: dict[str, Result]) -> None:
         success(f"🎉✨ {replaced} configuration file{plural} updated. ✨🎉")
 
 
-def recover_new_content(config_file_url: str, insecure: bool) -> requests.Response:
+def recover_new_content(
+    config_file_url: str, token: str, insecure: bool
+) -> requests.Response:
+    headers = _authentication_headers(token)
     with warnings.catch_warnings(record=True) as messages:
-        if insecure:
-            result = requests.get(config_file_url, verify=False, timeout=TIMEOUT)
-        else:
-            result = requests.get(config_file_url, timeout=TIMEOUT)
+        result = requests.get(
+            config_file_url,
+            verify=not insecure,
+            timeout=TIMEOUT,
+            headers=headers,
+        )
         for msg in messages:
             if not insecure or msg.category is not InsecureRequestWarning:
                 warn(msg.message)
     return result
+
+
+def _authentication_headers(token: str) -> dict[str, str]:
+    """GitLab uses the 'PRIVATE-TOKEN' header for private repositories."""
+    if token:
+        return {"PRIVATE-TOKEN": token}
+    return {}
+
+
+def is_successful_download(request_result: requests.Response) -> bool:
+    """A real raw file is served directly with a 200.
+
+    When authentication is missing or invalid, private hosts (e.g. GitLab)
+    redirect to a login page that also returns a 200 but with HTML content.
+    A non-empty redirection history flags that case as a failed download.
+    """
+    if request_result.history:
+        warn(
+            f"'{request_result.url}' was redirected (login page?). "
+            "Provide a token to authenticate to a private repository."
+        )
+        return False
+    return request_result.status_code == 200
 
 
 def write_new_content(path: Path, request_result: requests.Response) -> None:
