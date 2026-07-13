@@ -13,7 +13,7 @@ repos:
           - --remove-duplicate-keys
           - --remove-unused-variables
   - repo: https://github.com/PyCQA/isort
-    rev: 9.0.0a3
+    rev: 9.0.0b1
     hooks:
       - id: isort
   - repo: https://github.com/asottile/pyupgrade
@@ -63,7 +63,7 @@ repos:
         args: ["-sn", "-rn"]
         types: [python]
   - repo: https://github.com/pre-commit/mirrors-mypy
-    rev: v2.1.0
+    rev: v2.3.0
     hooks:
       - id: mypy
         name: mypy
