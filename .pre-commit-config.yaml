@@ -3,7 +3,7 @@ ci:
 
 repos:
   - repo: https://github.com/PyCQA/autoflake
-    rev: v2.3.3
+    rev: v2.4.0
     hooks:
       - id: autoflake
         args:
@@ -13,7 +13,7 @@ repos:
           - --remove-duplicate-keys
           - --remove-unused-variables
   - repo: https://github.com/PyCQA/isort
-    rev: 9.0.0b1
+    rev: 9.0.1
     hooks:
       - id: isort
   - repo: https://github.com/asottile/pyupgrade
@@ -63,7 +63,7 @@ repos:
         args: ["-sn", "-rn"]
         types: [python]
   - repo: https://github.com/pre-commit/mirrors-mypy
-    rev: v2.3.0
+    rev: v2.3.1
     hooks:
       - id: mypy
         name: mypy
@@ -74,7 +74,7 @@ repos:
         additional_dependencies: [types-requests==2.27.9]
         require_serial: true
   - repo: https://github.com/DavidAnson/markdownlint-cli2
-    rev: v0.23.0
+    rev: v0.23.3
     hooks:
       - id: markdownlint-cli2
         name: markdownlint-cli2
